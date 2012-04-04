@@ -1,0 +1,3 @@
+.vim/tmp/undo/*
+.vim/tmp/swap/*
+.vim/tmp/backup/*
