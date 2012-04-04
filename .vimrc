@@ -117,6 +117,9 @@
     " Clam - Better terminal command support
     Bundle 'sjl/clam.vim'
 
+    " Fugitive - Git wrapper
+    Bundle 'tpope/vim-fugitive'
+
     " TagBar - Shows all the methods, variables and stuff in file
     Bundle 'majutsushi/tagbar'
     " TagBar Extra Installation Notes {{
