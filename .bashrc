@@ -54,6 +54,11 @@ alias postgresstop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
 
 alias sc1='screen -dr hhp'
 
+#arrow keys auto complete history
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+
+
 #SSH aliases
 alias rcs='ssh campbt2@rcs.rpi.edu'
 alias malik='ssh lfdguest000@lfd.cs.rpi.edu'
