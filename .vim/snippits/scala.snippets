@@ -1,0 +1,137 @@
+###########################################################################
+#                             SCALA SNIPPITS                              #
+###########################################################################
+
+# These were converted manually from the Textmate
+# I hope they work
+
+# Many of the snippets here use a global option called
+# "g:ultisnips_scala_brace_style" which, if set to "nl" will put a newline
+# before '{' braces.
+
+global !p
+def nl(snip):
+    if snip.opt("g:ultisnips_scala_brace_style", "") == "nl":
+        snip += ""
+    else:
+        snip.rv += " "
+endglobal
+
+# Class and Case Classes
+snippet class "class" b
+class ${1:`!p
+snip.rv = snip.basename or "untitled"`} ${2:${3:extends ${4:Parent} }${5:with ${6:Trait} }}{
+	$0
+}
+endsnippet
+
+snippet cl "class" b
+class ${1:`!p
+snip.rv = snip.basename or "untitled"`} ${2:${3:extends ${4:Parent} }${5:with ${6:Trait} }}{
+	$0
+}
+endsnippet
+
+snippet cclass "case class" b
+case class ${1:Class} ${2:${3:extends ${4:Parent} }${5:with ${6:Trait} }}{
+	$0
+}
+endsnippet
+
+snippet ccl "case class" b
+case class ${1:Class} ${2:${3:extends ${4:Parent} }${5:with ${6:Trait} }}{
+	$0
+}
+endsnippet
+
+snippet trait "Trait" b
+trait ${1:Trait} {
+  $0
+}
+endsnippet
+
+snippet object "Object" b
+object ${1:`!p
+snip.rv = snip.basename or "untitled"`} ${2:extends ${3:Parent} }{
+	$0
+}
+endsnippet
+
+snippet application "Object extends Application" b
+object ${1:Object} extends Application {
+  ${2}
+}
+endsnippet
+
+snippet if "if" b
+if ($1)`!p nl(snip)`{
+	$0
+}
+endsnippet
+
+snippet eli "else if" 
+else if ($1)`!p nl(snip)`{
+	$0
+}
+endsnippet
+
+snippet /el(se)?/ "else" r
+else`!p nl(snip)`{
+	$0
+}
+endsnippet
+
+snippet wh "while" b
+while ($1)`!p nl(snip)`{
+	$0
+}
+endsnippet
+
+snippet def "define new method"
+def ${1:method}(${2})${3:: ${4:Unit}} = {
+  ${5}
+}
+endsnippet
+
+snippet try "try catch"
+try {
+    ${2}
+} 
+catch {
+    case e : ${1:Exception} => ${3}
+}
+endsnippet
+
+snippet for "for"
+for (${1} <- ${2})`!p nl(snip)`{
+  ${3}
+}
+endsnippet
+
+snippet foreach "foreach"
+foreach {${1} =>
+  ${2}
+}
+endsnippet
+
+snippet match "match with first case"
+match {
+    case ${1} => ${2}
+}
+endsnippet
+
+snippet main "Main Method"
+def main(args: Array[String]) = {
+  ${1}
+}
+endsnippet
+
+snippet p "Println"
+println(${1})
+endsnippet
+
+snippet pr "Print"
+print(${1})
+endsnippet
+
+
