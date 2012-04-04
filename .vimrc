@@ -114,6 +114,9 @@
     " Surround - surround text
     Bundle 'tpope/vim-surround'
 
+    " Clam - Better terminal command support
+    Bundle 'sjl/clam.vim'
+
     " TagBar - Shows all the methods, variables and stuff in file
     Bundle 'majutsushi/tagbar'
     " TagBar Extra Installation Notes {{
@@ -453,6 +456,11 @@
       \ } 
 
   " }}
+
+  " Clam Settings {{
+    nnoremap ! :Clam<space>
+  " }}
+
   "
   " Align Settings {
     " Align is annoying in that it sets a ton of mappings
