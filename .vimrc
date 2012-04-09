@@ -260,6 +260,10 @@
 	"  To insert an opening and closing space with a line in between
 	inoremap {<CR> {<CR>}<Esc>O
 	inoremap {<Space> {<Space><Space>}<Left><Left>
+	inoremap {<BS> {
+	inoremap (<CR> (<CR>)<Esc>O
+	inoremap (<Space> (<Space><Space>)<Left><Left>
+	inoremap (<BS> (
 
   " Space in normal mode removes annoying search highlighting
 	" Space also gets out of v mode
