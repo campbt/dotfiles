@@ -57,7 +57,7 @@
     set rtp+=~/.vim/bundle/vundle/
     call vundle#rc()
 
-    Bundle 'gmarik/vundle'
+    "Bundle 'gmarik/vundle'
   " }}
 
   " Bundle List {{
@@ -109,7 +109,7 @@
 		Bundle 'Townk/vim-autoclose'
 
     " Align - excellent alignment plugin
-    Bundle 'tsaleh/vim-align'
+    "Bundle 'tsaleh/vim-align'
 
     " Surround - surround text
     Bundle 'tpope/vim-surround'
@@ -119,6 +119,12 @@
 
     " Fugitive - Git wrapper
     Bundle 'tpope/vim-fugitive'
+
+    " Tabularize - better than Align (no stupid bindings)
+    Bundle 'godlygeek/tabular'
+
+    "Indexed Search - shows 'at x of N when searching'
+    Bundle 'vim-scripts/IndexedSearch'
 
     " TagBar - Shows all the methods, variables and stuff in file
     Bundle 'majutsushi/tagbar'
