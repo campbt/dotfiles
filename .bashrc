@@ -1,6 +1,8 @@
 export SCALA_HOME=/usr/local/scala
+export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
 export PATH=$PATH:/usr/local/sbin:$SCALA_HOME/bin:/usr/local/git/bin:/usr/local/mysql/bin
 export PATH=$PATH:/Library/PostgreSQL/9.1/bin:/usr/local/bin/jdbc.jar
+export CLASSPATH=$CLASSPATH:/usr/lib/java/jars/postgresql-9.1-901.jdbc4.jar
 export EDITOR=vim
 
 # Vi mode ya!
@@ -62,3 +64,4 @@ bind '"\e[B": history-search-forward'
 #SSH aliases
 alias rcs='ssh campbt2@rcs.rpi.edu'
 alias malik='ssh lfdguest000@lfd.cs.rpi.edu'
+
