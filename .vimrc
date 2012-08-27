@@ -26,17 +26,18 @@
   " \\w          : EasyMove by word forward (b for backward)
   " \\_          : EasyMove - j,k lines, w/b, words, e end of words, /,? for search
   "   \j, \k, \w : are same as \\j \\k \\w
-  " <D-/> or \/  : Comment out a line
+   "<D-/> or \/  : Comment out a line
   " \c           : NerdComment (add letter after c for option)
   " S-Up         : Move Line Up (Down to move it down)
   " ultisnips    : 
   "   tab        : expand out
   "   C-tab      : move to next section
   "   C-j , C-k  : move forward/backwar
-  " align        : 
+  " align        : <DEPRECATED>
   "              : 10,15Align = : //Aligns lines 10-15 by the equal
   "   \a=        : Aligns selected text by = sign
   "   \abox      : Boxes text in C style comment box
+  " Tabularize   : Aligns text based on a regex
   " surround     : (supports more than ()'s, just used as example)
   "   ys(        : add () surround
   "   ds(        : delete ()
@@ -44,6 +45,9 @@
   " \b           : toggle ctags
   " \B           : open ctags and it goes away when you select something
   " \m           : ToggleMiniMap
+  " <Leader>x    : Mark a line (X to unmark)
+  " <BS>         : Go to last mark (marked using Leader-x)
+  " S-<BS>       : Go to next mark 
 " }}
 
 " ---------
@@ -57,7 +61,7 @@
     set rtp+=~/.vim/bundle/vundle/
     call vundle#rc()
 
-    "Bundle 'gmarik/vundle'
+    Bundle 'gmarik/vundle'
   " }}
 
   " Bundle List {{
@@ -98,8 +102,9 @@
 
     "" UltiSnippits - Best snippit plugin I've seen
     "Errors out for some reason - github's issue so you have to manually installe
-		if(has("python"))
+		if(has("py3"))
 			Bundle 'SirVer/ultisnips'
+    else
 		endif
 
     "Matching Pairs Autocompletition Support
@@ -125,6 +130,9 @@
 
     "Indexed Search - shows 'at x of N when searching'
     Bundle 'vim-scripts/IndexedSearch'
+
+    " X marks the spot
+    Bundle 'john2x/x-marks-the-spot.vim'
 
     " TagBar - Shows all the methods, variables and stuff in file
     Bundle 'majutsushi/tagbar'
@@ -158,9 +166,9 @@
 
   " Tab Settings {{
     " Tabstops are 4 spaces
-    set tabstop=2
-    set shiftwidth=2
-    set softtabstop=2
+    set tabstop=4
+    set shiftwidth=4
+    set softtabstop=4
     set expandtab
     set autoindent
   " }}
@@ -216,7 +224,9 @@
   " Default color scheme (Custom Created One)
 	" NOTE : This colorscheme will support 256 Color terminals for OS X
 	" Not sure how it looks in other OS's yet
-  color tyler_dim
+  "color tyler_dim
+  colorscheme lucius 
+  LuciusDark 
 
   " Directories for swp files
   "set backupdir=~/.vim/backup
@@ -474,13 +484,7 @@
     nnoremap ! :Clam<space>
   " }}
 
-  "
-  " Align Settings {
-    " Align is annoying in that it sets a ton of mappings
-    "noremap <Leader>rwp <Nop>
-    "noremap <Leader>swp <Nop>
-    "noremap <Leader>m= <Nop>
-  " }
+  
 
 " -------
 
