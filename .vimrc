@@ -50,7 +50,7 @@
   " S-<BS>       : Go to next mark 
   " <leader>g*   : Bindings for Fugitive, replace * with c (commit), a (add), s (status),  l (log), d (diff)
   " <C-t>        : Create a tab
-  " F9 , F10     : Move tab left and right respectively
+  " F7 , F8     : Move tab left and right respectively
 " }}
 
 " ---------
@@ -371,8 +371,8 @@
   nnoremap <C-t> :tabnew<CR>
 
   " Move tab to left (F9) and right (F10)
-  nnoremap <F9> :call TabMove(-1)<CR>
-  nnoremap <F10> :call TabMove(1)<CR>
+  nnoremap <F7> :call TabMove(-1)<CR>
+  nnoremap <F8> :call TabMove(1)<CR>
  " }}
 
 " -------
