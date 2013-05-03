@@ -48,6 +48,9 @@
   " <Leader>x    : Mark a line (X to unmark)
   " <BS>         : Go to last mark (marked using Leader-x)
   " S-<BS>       : Go to next mark 
+  " <leader>g*   : Bindings for Fugitive, replace * with c (commit), a (add), s (status),  l (log), d (diff)
+  " <C-t>        : Create a tab
+  " F9 , F10     : Move tab left and right respectively
 " }}
 
 " ---------
@@ -66,6 +69,9 @@
 
   " Bundle List {{
     "List of Plugins used (Comment out to disable them)
+
+    " javacomplete - Provides Intellisense-like completion for java
+    Bundle 'vim-scripts/javacomplete'
 
     "NerdTree - Directory Viewer
     Bundle 'scrooloose/nerdtree'
@@ -207,7 +213,7 @@
 
   " Status Line
   "set stl=%f\ %m\ %r%{fugitive#statusline()}\ Line:%l/%L[%p%%]\ Col:%v\ Buf:#%n\ [%b][0x%B]
-  set statusline=%f\ %r%m%h%=(%l/%L,\ %c)\ %3p%%\ %w\ %y\ [%{&encoding}:%{&fileformat}]\ \ 
+  set statusline=%f\ %r%{fugitive#statusline()}%m%h%=(%l/%L,\ %c)\ %3p%%\ %w\ %y\ [%{&encoding}:%{&fileformat}]\ \ 
 
   " Set up the gui cursor to look nice
   set guicursor=n-v-c:block-Cursor-blinkon0,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor,r-cr:hor20-Cursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
@@ -225,8 +231,9 @@
 	" NOTE : This colorscheme will support 256 Color terminals for OS X
 	" Not sure how it looks in other OS's yet
   "color tyler_dim
-  colorscheme lucius 
-  LuciusDark 
+  "colorscheme lucius 
+  "LuciusDark 
+  colorscheme smyck
 
   " Directories for swp files
   "set backupdir=~/.vim/backup
@@ -360,6 +367,12 @@
   " Use for printing 'println('Test 1')' then 'println('Test 2')' ...etc
   nnoremap <leader>i p<C-A>==yy
 
+  " New tabs
+  nnoremap <C-t> :tabnew<CR>
+
+  " Move tab to left (F9) and right (F10)
+  nnoremap <F9> :call TabMove(-1)<CR>
+  nnoremap <F10> :call TabMove(1)<CR>
  " }}
 
 " -------
@@ -367,6 +380,36 @@
 " Plugin Settings {{
   "Most custom mappings here should involve <Leader> key
   
+  " Javacomplete settings {{
+    "autocmd Filetype java setlocal omnifunc=javacomplete#Complete
+    "setlocal completefunc=javacomplete#CompleteParamsInfo
+    "autocmd Filetype java let g:SuperTabDefaultCompletionType='<C-x><C-o><C-p>'
+    "autocmd Filetype java imap <C-w> <C-x><C-o><C-p>
+    "autocmd Filetype java let g:SuperTabRetainCompletionDuration='completion'
+
+    "if glob('AndroidManifest.xml') =~ ''
+        "if filereadable('project.properties') 
+            "let s:androidSdkPath = '/opt/android-sdk'
+            "" the following line uses external tools and is less portable
+            "" let s:androidTargetPlatform = system('grep target= project.properties | cut -d \= -f 2')
+            "vimgrep /target=/j project.properties
+            "let s:androidTargetPlatform = split(getqflist()[0].text, '=')[1] 
+            "let s:targetAndroidJar = s:androidSdkPath . '/platforms/' . s:androidTargetPlatform .
+            "'/android.jar'
+            "if $CLASSPATH =~ ''
+                "let $CLASSPATH = s:targetAndroidJar . ':' . $CLASSPATH
+            "else
+                "let $CLASSPATH = s:targetAndroidJar
+            "endif
+        "end
+    "endif
+  " }}
+
+  " eclim settings {{
+      autocmd Filetype java imap <C-w> <C-x><C-u><C-p>
+      autocmd Filetype java let g:SuperTabRetainCompletionDuration='completion'
+  " }}
+
   " NERDTree Settings {{
     let NERDTreeIgnore=['\.pyc$', '\.rbc$', '\~$']
     map <Leader>n :NERDTreeToggle<CR>
@@ -484,11 +527,39 @@
     nnoremap ! :Clam<space>
   " }}
 
+  " Fugitive Settings {{
+    " Some keybindings:
+    nmap <leader>gs :Gstatus<cr>
+    nmap <leader>gc :Gcommit<cr>
+    nmap <leader>ga :Gwrite<cr>
+    nmap <leader>gl :Glog<cr>
+    nmap <leader>gd :Gdiff<cr>
+  " }}
   
 
 " -------
 
 " Custom Functions {{
+
+  " Move Tab - moves the tab in the given direction
+    function! TabMove(direction)
+        " get number of tab pages.
+        let ntp=tabpagenr("$")
+        " move tab, if necessary.
+        if ntp > 1
+            " get number of current tab page.
+            let ctpn=tabpagenr()
+            " move left.
+            if a:direction < 0
+                let index=((ctpn-1+ntp-1)%ntp)
+            else
+                let index=(ctpn%ntp)
+            endif
+
+            " move tab page.
+            execute "tabmove ".index
+        endif
+    endfunction
 
   " Fold Column Toggle {{
     "A fold method that toggles the foldcolumn
