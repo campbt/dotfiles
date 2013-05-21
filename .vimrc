@@ -71,7 +71,7 @@
     "List of Plugins used (Comment out to disable them)
 
     " javacomplete - Provides Intellisense-like completion for java
-    Bundle 'vim-scripts/javacomplete'
+    "Bundle 'vim-scripts/javacomplete'
 
     "NerdTree - Directory Viewer
     Bundle 'scrooloose/nerdtree'
@@ -80,13 +80,13 @@
     Bundle 'scrooloose/nerdcommenter'
 
     ""ZoomWin - Toggles hiding all but 1 window
-    Bundle 'vim-scripts/ZoomWin'
+    Bundle 'ZoomWin'
 
     ""Ctrl-P Fuzzy Finding Files
     Bundle 'kien/ctrlp.vim'
 
     "" SuperTab - Complete using Tab
-    Bundle 'ervandew/supertab'
+    "Bundle 'ervandew/supertab'
 
     "" Smartusline - Color codes status line
     Bundle 'molok/vim-smartusline'
@@ -98,17 +98,17 @@
     Bundle 'sickill/vim-pasta'
 
     "" Highlights hex Colors (useful for editing color files
-    Bundle 'vim-scripts/hexHighlight.vim'
+    Bundle 'hexHighlight.vim'
 
     "" EasyMotion - Fast moving through file
     Bundle 'Lokaltog/vim-easymotion'
 
     "" upAndDown - Move lines up and down using shift arrow keys
-    Bundle 'vim-scripts/upAndDown'
+    Bundle 'upAndDown'
 
     "" UltiSnippits - Best snippit plugin I've seen
     "Errors out for some reason - github's issue so you have to manually installe
-		if(has("py3"))
+		if(has("py3") || has("python"))
 			Bundle 'SirVer/ultisnips'
     else
 		endif
@@ -116,11 +116,13 @@
     "Matching Pairs Autocompletition Support
     "Bundle 'Raimondi/delimitMate'
 
-		" Autoclose - a simpler approach to autocompleting pairs
-		Bundle 'Townk/vim-autoclose'
+    " Autoclose - a simpler approach to autocompleting pairs
+    "Bundle 'Townk/vim-autoclose'
+    Bundle 'Raimondi/delimitMate'
 
     " Align - excellent alignment plugin
     "Bundle 'tsaleh/vim-align'
+
 
     " Surround - surround text
     Bundle 'tpope/vim-surround'
@@ -135,10 +137,19 @@
     Bundle 'godlygeek/tabular'
 
     "Indexed Search - shows 'at x of N when searching'
-    Bundle 'vim-scripts/IndexedSearch'
+    Bundle 'IndexedSearch'
 
     " X marks the spot
     Bundle 'john2x/x-marks-the-spot.vim'
+
+    " You Complete Me - Fuzzy finding auto completion
+    Bundle 'Valloric/YouCompleteMe'
+    " You Complete Meet Extra Installation Notes {{
+    "   Check the github link at:
+    "   https://github.com/Valloric/YouCompleteMe
+    "
+    "   This plugin requires some extra compiled sources to work properly
+    " }}
 
     " TagBar - Shows all the methods, variables and stuff in file
     Bundle 'majutsushi/tagbar'
@@ -407,7 +418,13 @@
 
   " eclim settings {{
       autocmd Filetype java imap <C-w> <C-x><C-u><C-p>
-      autocmd Filetype java let g:SuperTabRetainCompletionDuration='completion'
+      "autocmd Filetype java let g:SuperTabRetainCompletionDuration='completion'
+      let g:EclimCompletionMethod = 'omnifunc'
+
+      " Lets eclim play work with YouCompelteMe
+      autocmd Filetype * runtime! autoload/eclim/<amatch>/complete.vim
+          \ | let s:cfunc = 'eclim#'.expand('<amatch>').'#complete#CodeComplete'
+          \ | if exists('*'.s:cfunc) | let &l:omnifunc=s:cfunc | endif
   " }}
 
   " NERDTree Settings {{
@@ -460,6 +477,9 @@
   " UltiSnippits Settings {{
     " Also looks in snippits folder in default .vim folder
     let g:UltiSnipsSnippetDirectories=["UltiSnips", "snippits"]
+    let g:UltiSnipsExpandTrigger="<c-j>"
+    let g:UltiSnipsJumpForwardTrigger="<c-j>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-k>"
   " }}
 
   " SmartusLine Settings {{
@@ -483,17 +503,22 @@
   " Autoclose Settings {{
 
   " Global AutoClose Pairs (don't use <>)
-    autocmd FileType *
-              \ let b:AutoClosePairs = AutoClose#DefaultPairsModified("","<")
+    "autocmd FileType *
+              "\ let b:AutoClosePairs = AutoClose#DefaultPairsModified("","<")
 
     " Filetype specific pairs:
-    autocmd FileType ruby 
-              \ let b:AutoClosePairs = AutoClose#DefaultPairsModified("|", "<")
-    autocmd FileType html 
-              \ let b:AutoClosePairs = AutoClose#DefaultPairsModified("% #", "")
+    "autocmd FileType ruby 
+              "\ let b:AutoClosePairs = AutoClose#DefaultPairsModified("|", "<")
+    "autocmd FileType html 
+              "\ let b:AutoClosePairs = AutoClose#DefaultPairsModified("% #", "")
 
     
   
+  " }}
+  "
+  " delimitMate Settings {{
+      let delimitMate_smart_quotes = 1
+        let b:delimitMate_matchpairs = "(:),[:],{:},<:>,\":\",':'"
   " }}
 
   " TagBar Settings {{
