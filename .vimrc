@@ -30,27 +30,20 @@
   " \c           : NerdComment (add letter after c for option)
   " S-Up         : Move Line Up (Down to move it down)
   " ultisnips    : 
-  "   tab        : expand out
-  "   C-tab      : move to next section
-  "   C-j , C-k  : move forward/backwar
-  " align        : <DEPRECATED>
-  "              : 10,15Align = : //Aligns lines 10-15 by the equal
-  "   \a=        : Aligns selected text by = sign
-  "   \abox      : Boxes text in C style comment box
   " Tabularize   : Aligns text based on a regex
   " surround     : (supports more than ()'s, just used as example)
   "   ys(        : add () surround
   "   ds(        : delete ()
   "   cs({       : Change () to {}
-  " \b           : toggle ctags
-  " \B           : open ctags and it goes away when you select something
-  " \m           : ToggleMiniMap
-  " <Leader>x    : Mark a line (X to unmark)
-  " <BS>         : Go to last mark (marked using Leader-x)
-  " S-<BS>       : Go to next mark 
-  " <leader>g*   : Bindings for Fugitive, replace * with c (commit), a (add), s (status),  l (log), d (diff)
+  " \b           : open ctags and it goes away when you select something
+  " \B           : toggle ctags
+  " \m           : ToggleMiniMap (Doesn't work in terminal!)
+  " :w!!         : Force save, even on Read Only (will ask you for root permissions)
+  " \g*   : Bindings for Fugitive, replace * with c (commit), a (add), s (status),  l (log), d (diff)
   " <C-t>        : Create a tab
-  " F7 , F8     : Move tab left and right respectively
+  " F7 , F8      : Move tab left and right respectively
+  " :SaveSession : Save current tabs (can also supply a name for session)
+  " :OpenSession : Displays list (or you can tab complete) of sessions
 " }}
 
 " ---------
@@ -69,9 +62,6 @@
 
   " Bundle List {{
     "List of Plugins used (Comment out to disable them)
-
-    " javacomplete - Provides Intellisense-like completion for java
-    "Bundle 'vim-scripts/javacomplete'
 
     "NerdTree - Directory Viewer
     Bundle 'scrooloose/nerdtree'
@@ -107,11 +97,10 @@
     Bundle 'upAndDown'
 
     "" UltiSnippits - Best snippit plugin I've seen
-    "Errors out for some reason - github's issue so you have to manually installe
-		if(has("py3") || has("python"))
+    "Errors out for some reason - github's issue so you have to manually installed
+    if(has("py3") || has("python"))
 			Bundle 'SirVer/ultisnips'
-    else
-		endif
+    endif
 
     "Matching Pairs Autocompletition Support
     "Bundle 'Raimondi/delimitMate'
@@ -120,9 +109,8 @@
     "Bundle 'Townk/vim-autoclose'
     Bundle 'Raimondi/delimitMate'
 
-    " Align - excellent alignment plugin
-    "Bundle 'tsaleh/vim-align'
-
+    " Tabularize - better than Align (no stupid bindings)
+    Bundle 'godlygeek/tabular'
 
     " Surround - surround text
     Bundle 'tpope/vim-surround'
@@ -133,14 +121,8 @@
     " Fugitive - Git wrapper
     Bundle 'tpope/vim-fugitive'
 
-    " Tabularize - better than Align (no stupid bindings)
-    Bundle 'godlygeek/tabular'
-
     "Indexed Search - shows 'at x of N when searching'
     Bundle 'IndexedSearch'
-
-    " X marks the spot
-    Bundle 'john2x/x-marks-the-spot.vim'
 
     " vim-session - use good session manager ( Misc needed for vim-session )
     Bundle 'xolox/vim-session'
@@ -151,6 +133,11 @@
     " You Complete Meet Extra Installation Notes {{
     "   Check the github link at:
     "   https://github.com/Valloric/YouCompleteMe
+    "
+    "   try: cd ~/.vim/bundle/YouCompleteMe
+    "    ./install.sh
+    "
+    "    (If it doesn't work you'll need to install CMake and stuff. Read the readme)
     "
     "   This plugin requires some extra compiled sources to work properly
     " }}
@@ -180,21 +167,29 @@
 
 " Vim Settings {{
 
-  " Run gvimrc commands First
+    " Default color scheme (Custom Created One)
+      " NOTE : This colorscheme will support 256 Color terminals for OS X
+      " Not sure how it looks in other OS's yet
+    "color tyler_dim
+    "colorscheme lucius 
+    "LuciusDark 
+    colorscheme smyck
+
+    " Run gvimrc commands First
     if has("gui_macvim")
       :source ~/.vim/gvimrc
     endif
 
-  " Tab Settings {{
+    " Tab Settings {{
     " Tabstops are 4 spaces
     set tabstop=4
     set shiftwidth=4
     set softtabstop=4
     set expandtab
     set autoindent
-  " }}
+    " }}
 
-  " Fold Settings {{
+    " Fold Settings {{
     "folding settings
     "zn toggles foldcolumn: (Recap: za=toggle fold, zM=foldAll, zR=unfold all)
     set foldmarker={,}             "Fold based on Brackets
@@ -203,191 +198,183 @@
     set nofoldenable        "dont fold by default
     set foldlevel=1         "this is just what i use
     set foldminlines=3      "Braces that only span 3 lines or less will not be folded
-  " }}
+    " }}
 
-  " Searching {{
+    " Searching {{
     set hlsearch
     set incsearch
     set ignorecase
     set smartcase
-  " }}
-  
-  " Backups {{
+    " }}
+
+    " Backups {{
     set undodir=~/.vim/tmp/undo//     " undo files
     set backupdir=~/.vim/tmp/backup// " backups
     set directory=~/.vim/tmp/swap//   " swap files
     set backup                        " enable backups
     set noswapfile                    " It's 2012, Vim.
-  " }}
+    " }}
 
-  set number
-  set ruler
-  set nowrap
-  set textwidth=160
-  syntax on
+    set number
+    set ruler
+    set nowrap
+    set textwidth=160
+    syntax on
 
-  " Status Line
-  "set stl=%f\ %m\ %r%{fugitive#statusline()}\ Line:%l/%L[%p%%]\ Col:%v\ Buf:#%n\ [%b][0x%B]
-  set statusline=%f\ %r%{fugitive#statusline()}%m%h%=(%l/%L,\ %c)\ %3p%%\ %w\ %y\ [%{&encoding}:%{&fileformat}]\ \ 
+    " Status Line
+    "set stl=%f\ %m\ %r%{fugitive#statusline()}\ Line:%l/%L[%p%%]\ Col:%v\ Buf:#%n\ [%b][0x%B]
+    set statusline=%f\ %r%{fugitive#statusline()}%m%h%=(%l/%L,\ %c)\ %3p%%\ %w\ %y\ [%{&encoding}:%{&fileformat}]\ \ 
 
-  " Set up the gui cursor to look nice
-  set guicursor=n-v-c:block-Cursor-blinkon0,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor,r-cr:hor20-Cursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
+    " Set up the gui cursor to look nice
+    set guicursor=n-v-c:block-Cursor-blinkon0,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor,r-cr:hor20-Cursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
 
-  " allow backspacing over everything in insert mode
-  set backspace=indent,eol,start
+    " allow backspacing over everything in insert mode
+    set backspace=indent,eol,start
 
-  " load the plugin and indent settings for the detected filetype
-  filetype plugin indent on
+    " load the plugin and indent settings for the detected filetype
+    filetype plugin indent on
 
-  " tell VIM to always put a status line in, even if there is only one window
-  set laststatus=2
+    " tell VIM to always put a status line in, even if there is only one window
+    set laststatus=2
 
-  " Default color scheme (Custom Created One)
-	" NOTE : This colorscheme will support 256 Color terminals for OS X
-	" Not sure how it looks in other OS's yet
-  "color tyler_dim
-  "colorscheme lucius 
-  "LuciusDark 
-  colorscheme smyck
+    " Directories for swp files
+    "set backupdir=~/.vim/backup
+    "set directory=~/.vim/backup
 
-  " Directories for swp files
-  "set backupdir=~/.vim/backup
-  "set directory=~/.vim/backup
+    " Show (partial) command in the status line
+    set showcmd
 
-  " Show (partial) command in the status line
-  set showcmd
+    " When the page starts to scroll, keep the cursor 5 lines from the top and 5
+    " lines from the bottom
+    set scrolloff=5
 
-  " When the page starts to scroll, keep the cursor 5 lines from the top and 5
-  " lines from the bottom
-  set scrolloff=5
+    " Tab completion in involding 'wild' {
+    set wildmode=list:longest,list:full
+    set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,*.pyc
 
-  " Tab completion in involding 'wild' {
-  set wildmode=list:longest,list:full
-  set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,*.pyc
+    " Make the command-line completion better
+    set wildmenu
 
-  " Make the command-line completion better
-  set wildmenu
+    "Highlight cursor line (of current buffer only)
+    autocmd BufEnter * setlocal cursorline
+    autocmd BufLeave * setlocal nocursorline
 
-  "Highlight cursor line (of current buffer only)
-  autocmd BufEnter * setlocal cursorline
-  autocmd BufLeave * setlocal nocursorline
-
-  " Remember last location in file
-  if has("autocmd")
+    " Remember last location in file
+    if has("autocmd")
     au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
       \| exe "normal g'\"" | endif
-  endif
+    endif
 
 " }}
 
 " ----------
 
 " Custom Remappings {{
-  " This section does not include mappings of plugins
-	
-  " Ctrl-Space to leave insert mode
-  noremap <C-Space> <Esc>
-  inoremap <C-Space> <Esc>
-	" Allows OS X Terminal to use Ctrl-Space
-	inoremap <C-@> <Esc>
+    " This section does not include mappings of plugins
 
-	" Ctrl-] To push everything else to the next line and then hit Enter
-	" Ideal for opening {}
-  inoremap <C-]> <CR><Esc>O
+    " Ctrl-Space to leave insert mode
+    noremap <C-Space> <Esc>
+    inoremap <C-Space> <Esc>
+    " Allows OS X Terminal to use Ctrl-Space
+    inoremap <C-@> <Esc>
 
-	"  To insert an opening and closing space with a line in between
-	inoremap {<CR> {<CR>}<Esc>O
-	inoremap {<Space> {<Space><Space>}<Left><Left>
-	inoremap {<BS> {
-	inoremap (<CR> (<CR>)<Esc>O
-	inoremap (<Space> (<Space><Space>)<Left><Left>
-	inoremap (<BS> (
+    " Ctrl-] To push everything else to the next line and then hit Enter
+    " Ideal for opening {}
+    inoremap <C-]> <CR><Esc>O
 
-  " Space in normal mode removes annoying search highlighting
-	" Space also gets out of v mode
-  nnoremap <Space> :noh<CR>
-	vnoremap <Space> <Esc>
+    "  To insert an opening and closing space with a line in between
+    inoremap {<CR> {<CR>}<Esc>O
+    inoremap {<Space> {<Space><Space>}<Left><Left>
+    inoremap {<BS> {
+    inoremap (<CR> (<CR>)<Esc>O
+    inoremap (<Space> (<Space><Space>)<Left><Left>
+    inoremap (<BS> (
 
-  " Easier moving in tabs and windows
-  map <C-J> <C-W>j
-  map <C-K> <C-W>k
-  map <C-L> <C-W>l
-  map <C-H> <C-W>h
+    " Space in normal mode removes annoying search highlighting
+    " Space also gets out of v mode
+    nnoremap <Space> :noh<CR>
+    vnoremap <Space> <Esc>
 
-  "Shift H and L for moving between tabs
-	" The following two lines conflict with moving to top and bottom of the screen
-	map <S-H> gT          
-	map <S-L> gt
+    " Easier moving in tabs and windows
+    map <C-J> <C-W>j
+    map <C-K> <C-W>k
+    map <C-L> <C-W>l
+    map <C-H> <C-W>h
 
-  nmap j gj
-  nmap k gk
-	
-	"Toggles showing the Fold Column (calls custom method)
-	nnoremap zn :call FoldColumnToggle()<CR>
-	
-	" Unimpaired configuration
-	" Bubble single lines
-	nmap <C-Up> [e
-	nmap <C-Down> ]e
-	" Bubble multiple lines
-	vmap <C-Up> [egv
-	vmap <C-Down> ]egv
-	
-	" Inserts the path of the currently edited file into a command
-	" Command mode: Ctrl+P
-	cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-	
-	"indent/unindent (reselects text afterwards)
-	vnoremap > >gv
-	vnoremap < <gv
-	
-	" Change working directory to current file's location
-	nmap <silent> <Leader>cd :cd %:p:h<CR>
-	
-	" Make horizontal scrolling easier
-	nmap <silent> <C-o> 10zl
-	nmap <silent> <C-i> 10zh
+    "Shift H and L for moving between tabs
+    " The following two lines conflict with moving to top and bottom of the screen
+    map <S-H> gT          
+    map <S-L> gt
 
-  "Editing Vimrc File
-  nmap <silent> <Leader>ve :e $MYVIMRC<CR>
-  nmap <silent> <Leader>vs :so $MYVIMRC<CR>
+    nmap j gj
+    nmap k gk
 
-  " Opens an edit command with the path of the currently edited file filled in
-	" Normal mode: <Leader>e
-	map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+    "Toggles showing the Fold Column (calls custom method)
+    nnoremap zn :call FoldColumnToggle()<CR>
 
-	" Opens a tab edit command with the path of the currently edited file filled in
-	" Normal mode: <Leader>t
-	map <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
-  
-  map <Leader>ww :call MarkWindowSwap()<CR>
-  map <Leader>ws :call DoWindowSwap()<CR>
+    " Unimpaired configuration
+    " Bubble single lines
+    nmap <C-Up> [e
+    nmap <C-Down> ]e
+    " Bubble multiple lines
+    vmap <C-Up> [egv
+    vmap <C-Down> ]egv
 
-  " Repeat last command on each line in Visual Mode
-  vnoremap . :normal .<CR>
+    " Inserts the path of the currently edited file into a command
+    " Command mode: Ctrl+P
+    cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 
-  " Don't move on *
-  nnoremap * *<c-o>
+    "indent/unindent (reselects text afterwards)
+    vnoremap > >gv
+    vnoremap < <gv
 
-  " Window resizing
-  nnoremap <S-C-Left> 5<c-w><
-  nnoremap <S-C-Right> 5<c-w>>
-  nnoremap <S-C-Up> 5<c-w>+
-  nnoremap <S-C-Down> 5<c-w>-
+    " Change working directory to current file's location
+    nmap <silent> <Leader>cd :cd %:p:h<CR>
 
-  " Force saving files that require root permission
-  cmap w!! %!sudo tee > /dev/null %
+    " Make horizontal scrolling easier
+    nmap <silent> <C-o> 10zl
+    nmap <silent> <C-i> 10zh
 
-  " Paste and increment first number
-  " Use for printing 'println('Test 1')' then 'println('Test 2')' ...etc
-  nnoremap <leader>i p<C-A>==yy
+    "Editing Vimrc File
+    nmap <silent> <Leader>ve :e $MYVIMRC<CR>
+    nmap <silent> <Leader>vs :so $MYVIMRC<CR>
 
-  " New tabs
-  nnoremap <C-t> :tabnew<CR>
+    " Opens an edit command with the path of the currently edited file filled in
+    " Normal mode: <Leader>e
+    map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 
-  " Move tab to left (F9) and right (F10)
-  nnoremap <F7> :call TabMove(-1)<CR>
-  nnoremap <F8> :call TabMove(1)<CR>
+    " Opens a tab edit command with the path of the currently edited file filled in
+    " Normal mode: <Leader>t
+    map <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
+
+    map <Leader>ww :call MarkWindowSwap()<CR>
+    map <Leader>ws :call DoWindowSwap()<CR>
+
+    " Repeat last command on each line in Visual Mode
+    vnoremap . :normal .<CR>
+
+    " Don't move on *
+    nnoremap * *<c-o>
+
+    " Window resizing
+    nnoremap <S-C-Left> 5<c-w><
+    nnoremap <S-C-Right> 5<c-w>>
+    nnoremap <S-C-Up> 5<c-w>+
+    nnoremap <S-C-Down> 5<c-w>-
+
+    " Force saving files that require root permission
+    cmap w!! %!sudo tee > /dev/null %
+
+    " Paste and increment first number
+    " Use for printing 'println('Test 1')' then 'println('Test 2')' ...etc
+    nnoremap <leader>i p<C-A>==yy
+
+    " New tabs
+    nnoremap <C-t> :tabnew<CR>
+
+    " Move tab to left (F9) and right (F10)
+    nnoremap <F7> :call TabMove(-1)<CR>
+    nnoremap <F8> :call TabMove(1)<CR>
  " }}
 
 " -------
@@ -395,31 +382,6 @@
 " Plugin Settings {{
   "Most custom mappings here should involve <Leader> key
   
-  " Javacomplete settings {{
-    "autocmd Filetype java setlocal omnifunc=javacomplete#Complete
-    "setlocal completefunc=javacomplete#CompleteParamsInfo
-    "autocmd Filetype java let g:SuperTabDefaultCompletionType='<C-x><C-o><C-p>'
-    "autocmd Filetype java imap <C-w> <C-x><C-o><C-p>
-    "autocmd Filetype java let g:SuperTabRetainCompletionDuration='completion'
-
-    "if glob('AndroidManifest.xml') =~ ''
-        "if filereadable('project.properties') 
-            "let s:androidSdkPath = '/opt/android-sdk'
-            "" the following line uses external tools and is less portable
-            "" let s:androidTargetPlatform = system('grep target= project.properties | cut -d \= -f 2')
-            "vimgrep /target=/j project.properties
-            "let s:androidTargetPlatform = split(getqflist()[0].text, '=')[1] 
-            "let s:targetAndroidJar = s:androidSdkPath . '/platforms/' . s:androidTargetPlatform .
-            "'/android.jar'
-            "if $CLASSPATH =~ ''
-                "let $CLASSPATH = s:targetAndroidJar . ':' . $CLASSPATH
-            "else
-                "let $CLASSPATH = s:targetAndroidJar
-            "endif
-        "end
-    "endif
-  " }}
-
   " eclim settings {{
       autocmd Filetype java imap <C-w> <C-x><C-u><C-p>
       "autocmd Filetype java let g:SuperTabRetainCompletionDuration='completion'
@@ -528,8 +490,8 @@
   " TagBar Settings {{
   
     " TagBar Toggle Hotkey
-    map <Leader>b :TagbarToggle<CR>
-    map <Leader>B ::TagbarOpenAutoClose<CR>
+    map <Leader>b :TagbarOpenAutoClose<CR>
+    map <Leader>B :TagbarToggle<CR>
 
 
     " Scala Supp
