@@ -142,6 +142,10 @@
     " X marks the spot
     Bundle 'john2x/x-marks-the-spot.vim'
 
+    " vim-session - use good session manager ( Misc needed for vim-session )
+    Bundle 'xolox/vim-session'
+    Bundle 'xolox/vim-misc' 
+
     " You Complete Me - Fuzzy finding auto completion
     Bundle 'Valloric/YouCompleteMe'
     " You Complete Meet Extra Installation Notes {{
@@ -561,6 +565,10 @@
     nmap <leader>gd :Gdiff<cr>
   " }}
   
+  " vim-sessions Settings {{
+    let g:session_autoload = 'no'
+    let g:session_autosave = 'yes'
+  " }}
 
 " -------
 
