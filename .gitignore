@@ -1,4 +1,7 @@
 .vim/tmp/undo/*
 .vim/tmp/swap/*
 .vim/tmp/backup/*
-.vim/bundle/*
+.vim/bundle/
+.vim/plugin/
+.vim/sessions/
+.vim/eclim/
