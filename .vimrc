@@ -20,8 +20,8 @@
   " \o           : Brings up Searching for files in current directory
   " \]           : ZoomWin, when in split windows, zooms into the current one, \\ zooms out again
   " \cd          : Changes directory to the current files
-  " \ww          : Mark Window for Swapping
-  " \ws          : Swap Current Window with one marked
+  " \mw          : Mark Window for Swapping
+  " \ms          : Swap Current Window with one marked
   " \p           : Open up Yank Ring
   " \\w          : EasyMove by word forward (b for backward)
   " \\_          : EasyMove - j,k lines, w/b, words, e end of words, /,? for search
@@ -37,13 +37,14 @@
   "   cs({       : Change () to {}
   " \b           : open ctags and it goes away when you select something
   " \B           : toggle ctags
-  " \m           : ToggleMiniMap (Doesn't work in terminal!)
+  " \m           : <Disabled> ToggleMiniMap (Doesn't work in terminal!)
   " :w!!         : Force save, even on Read Only (will ask you for root permissions)
-  " \g*   : Bindings for Fugitive, replace * with c (commit), a (add), s (status),  l (log), d (diff)
+  " \g*          : Bindings for Fugitive, replace * with c (commit), a (add), s (status),  l (log), d (diff)
   " <C-t>        : Create a tab
   " F7 , F8      : Move tab left and right respectively
   " :SaveSession : Save current tabs (can also supply a name for session)
   " :OpenSession : Displays list (or you can tab complete) of sessions
+  " F2           : Toggle Paste mode on/off
 " }}
 
 " ---------
@@ -107,7 +108,7 @@
 
     " Autoclose - a simpler approach to autocompleting pairs
     "Bundle 'Townk/vim-autoclose'
-    Bundle 'Raimondi/delimitMate'
+    "Bundle 'Raimondi/delimitMate'
 
     " Tabularize - better than Align (no stupid bindings)
     Bundle 'godlygeek/tabular'
@@ -347,8 +348,8 @@
     " Normal mode: <Leader>t
     map <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
-    map <Leader>ww :call MarkWindowSwap()<CR>
-    map <Leader>ws :call DoWindowSwap()<CR>
+    map <Leader>mw :call MarkWindowSwap()<CR>
+    map <Leader>ms :call DoWindowSwap()<CR>
 
     " Repeat last command on each line in Visual Mode
     vnoremap . :normal .<CR>
@@ -375,6 +376,11 @@
     " Move tab to left (F9) and right (F10)
     nnoremap <F7> :call TabMove(-1)<CR>
     nnoremap <F8> :call TabMove(1)<CR>
+
+    " Paste mode toggle
+    nnoremap <F2> :set invpaste paste?<CR>
+    set pastetoggle=<F2>
+    set showmode
  " }}
 
 " -------
@@ -643,7 +649,7 @@
   endfunction
 
   command! ToggleMinimap call ToggleMinimap()
-  nnoremap <Leader>m :ToggleMinimap<CR>
+  "nnoremap <Leader>m :ToggleMinimap<CR>
 
   " }}
 
