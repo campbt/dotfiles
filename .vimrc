@@ -129,6 +129,9 @@
     Bundle 'xolox/vim-session'
     Bundle 'xolox/vim-misc' 
 
+    " Shows changed lines since last git commit
+    Bundle 'mhinz/vim-signify'
+
     " You Complete Me - Fuzzy finding auto completion
     Bundle 'Valloric/YouCompleteMe'
     " You Complete Meet Extra Installation Notes {{
@@ -536,6 +539,11 @@
   " vim-sessions Settings {{
     let g:session_autoload = 'no'
     let g:session_autosave = 'yes'
+  " }}
+
+  " vim-signify Settings {{
+    let g:signify_sign_overwrite = 0 " May not play nice with eclim
+    let g:signify_sign_delete_first_line = '-' " Default character doesnt work on ubuntu??
   " }}
 
 " -------
