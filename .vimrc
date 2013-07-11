@@ -45,6 +45,8 @@
   " :SaveSession : Save current tabs (can also supply a name for session)
   " :OpenSession : Displays list (or you can tab complete) of sessions
   " F2           : Toggle Paste mode on/off
+  " \gh          : Toggle highlight lines changed since last commit
+  " c] c[        : Move to next chunk of changes since last commit
 " }}
 
 " ---------
