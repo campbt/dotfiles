@@ -386,6 +386,10 @@
     nnoremap <F2> :set invpaste paste?<CR>
     set pastetoggle=<F2>
     set showmode
+
+    " Location list quick commands (useful for navigating eclim errors)
+    map [l :ll<CR>:lprev<CR>
+    map ]l :ll<CR>:lnext<CR>
  " }}
 
 " -------
