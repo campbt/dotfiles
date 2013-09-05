@@ -82,7 +82,10 @@
     "Bundle 'ervandew/supertab'
 
     "" Smartusline - Color codes status line
-    Bundle 'molok/vim-smartusline'
+    "Bundle 'molok/vim-smartusline'
+
+    "" vim-airline - cool status line
+    Bundle 'bling/vim-airline'
 
     "" Yankring - Great yanking \p to open yankring
     Bundle 'chrismetcalf/vim-yankring'
@@ -464,12 +467,40 @@
   " }}
 
   " SmartusLine Settings {{
-    let g:smartusline_string_to_highlight = '%f '
-		let g:smartusline_hi_replace = 'guibg=#e454ba guifg=black ctermbg=magenta ctermfg=black'
-		let g:smartusline_hi_insert  = 'guibg=orange guifg=black  ctermbg=208 ctermfg=black'
-		let g:smartusline_hi_normal  = 'guibg=#95e454 guifg=black ctermbg=113 ctermfg=black'
+    "let g:smartusline_string_to_highlight = '%f '
+		"let g:smartusline_hi_replace = 'guibg=#e454ba guifg=black ctermbg=magenta ctermfg=black'
+		"let g:smartusline_hi_insert  = 'guibg=orange guifg=black  ctermbg=208 ctermfg=black'
+		"let g:smartusline_hi_normal  = 'guibg=#95e454 guifg=black ctermbg=113 ctermfg=black'
   " }}
-  
+
+  " Airline Settings {{
+      "set statusline=%f\ %r%{fugitive#statusline()}%m%h%=(%l/%L,\ %c)\ %3p%%\ %w\ %y\ [%{&encoding}:%{&fileformat}]\ \ 
+      let g:airline_enable_hunks = 0 " Gets errors when this is enabled
+      let g:airline_theme = 'bubblegum'
+      let g:airline#extensions#whitespace#enabled = 0 " Who cares about whitespace?
+      "let g:airline_section_b = '%<%{expand("%:h")}/' " The relative path to the file
+      "let g:airline_section_c = '%<%t%m' " The file name (%t), if it has been modified (%m)
+      let g:airline_section_x = '%{airline#extensions#tagbar#currenttag()}' " Shows the method the cursor is in
+      "let g:airline_section_y = '%{airline#util#wrap(airline#extensions#branch#get_head(),0)}' " Shows the current branch
+      let g:airline_section_y = '%{airline#util#wrap(airline#parts#filetype(),0)}' " Shows the file type
+      let g:airline_section_z = '%l/%L : %c' " Shows the line number and column number of cursor
+
+      "let g:airline#extensions#ctrlp#color_template = 'visual'
+
+      " Enable this if the terminal is using a patched font
+      "let g:airline_powerline_fonts = 1
+      
+      " Modifies the colorscheme a bit
+      let g:airline_theme_patch_func = 'AirlineThemePatch'
+      function! AirlineThemePatch(palette)
+        if g:airline_theme == 'bubblegum'
+          for colors in values(a:palette.inactive)
+            let colors[2] = 243 " Makes the text a lighter gray on inactive colors
+          endfor
+        endif
+      endfunction
+  " }}
+ 
   " Yankring Settings {{
     nnoremap <silent> <Leader>p :YRShow<CR>
   " }}
