@@ -485,10 +485,12 @@
       let g:airline_section_y = '%{airline#util#wrap(airline#parts#filetype(),0)}' " Shows the file type
       let g:airline_section_z = '%l/%L : %c' " Shows the line number and column number of cursor
 
-      "let g:airline#extensions#ctrlp#color_template = 'visual'
+      let g:airline#extensions#ctrlp#color_template = 'visual'
 
       " Enable this if the terminal is using a patched font
-      "let g:airline_powerline_fonts = 1
+      set encoding=utf-8
+      set fillchars+=stl:\ ,stlnc:\
+      let g:airline_powerline_fonts = 1
       
       " Modifies the colorscheme a bit
       let g:airline_theme_patch_func = 'AirlineThemePatch'
