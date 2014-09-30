@@ -410,6 +410,7 @@
   
   " eclim settings {{
       autocmd Filetype java imap <C-w> <C-x><C-u><C-p>
+      autocmd Filetype java map <C-n> :JavaSearch -a edit<CR>
       "autocmd Filetype java let g:SuperTabRetainCompletionDuration='completion'
       let g:EclimCompletionMethod = 'omnifunc'
 
