@@ -137,6 +137,9 @@
     " Shows changed lines since last git commit
     Bundle 'mhinz/vim-signify'
 
+    " Better JSON Support
+    Bundle 'elzr/vim-json'
+
     " You Complete Me - Fuzzy finding auto completion
     Bundle 'Valloric/YouCompleteMe'
     " You Complete Meet Extra Installation Notes {{
@@ -274,6 +277,11 @@
       \| exe "normal g'\"" | endif
     endif
 
+    " ================
+    " File Type Specific Settings
+
+    " Json
+    au FileType json set textwidth=0
 " }}
 
 " ----------
@@ -481,6 +489,7 @@
       "let g:airline_section_b = '%<%{expand("%:h")}/' " The relative path to the file
       "let g:airline_section_c = '%<%t%m' " The file name (%t), if it has been modified (%m)
       let g:airline_section_x = '%{airline#extensions#tagbar#currenttag()}' " Shows the method the cursor is in
+      let g:airline_section_x = '' " Shows the method the cursor is in
       "let g:airline_section_y = '%{airline#util#wrap(airline#extensions#branch#get_head(),0)}' " Shows the current branch
       let g:airline_section_y = '%{airline#util#wrap(airline#parts#filetype(),0)}' " Shows the file type
       let g:airline_section_z = '%l/%L : %c' " Shows the line number and column number of cursor
