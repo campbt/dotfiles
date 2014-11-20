@@ -1,8 +1,9 @@
-export SCALA_HOME=/usr/local/scala
-export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
-export PATH=$PATH:/usr/local/sbin:$SCALA_HOME/bin:/usr/local/git/bin:/usr/local/mysql/bin
-export PATH=$PATH:/Library/PostgreSQL/9.1/bin:/usr/local/bin/jdbc.jar
-export CLASSPATH=$CLASSPATH:/usr/lib/java/jars/postgresql-9.1-901.jdbc4.jar
+export PATH=~/bin:$PATH
+export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/sbin:/usr/local/git/bin:/usr/local/mysql/bin:$PATH
+export PATH=~/Amazon/Cloud9BrazilBuild-1.0/bin:$PATH
+export PATH=~/Amazon/sdk/platform-tools:$PATH
+export PATH="/apollo/env/ruby193/bin:/apollo/env/SDETools/bin:$PATH"
 export EDITOR=vim
 
 # Vi mode ya!
@@ -21,12 +22,14 @@ alias vit='vi '
 export CLICOLOR=1
 #export LSCOLORS="Gxfxcxdxcxegedabagacad"
 export LSCOLORS=ExFxCxDxBxegedabagacGx
-alias ls='ls -FG'
+#alias ls='ls -FG'
+alias ls='gls -p --color=auto --group-directories-first'
+alias bashedit='vim ~/.bashrc'
 
 #Good git commands
 alias gitpulloverwrite='git pull -s recursive -X theirs origin r'
 alias gs='git status'
-alias gd='git diff'
+alias gd='git diff --color'
 alias gc='git commit'
 alias ga='git add'
 alias gaa='git add -A'
@@ -38,6 +41,7 @@ alias gpom='git push origin master'
 alias gg='git log --graph --oneline --all'                                                                                                 
 alias gl='git log --graph --full-history --all --color --date=short --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%ad %s"'
 alias gll="git log -p -40 | vim - -R -c 'set foldmethod=syntax'"
+alias gundo='git reset --soft HEAD^'
 
 #Alisa to v script, type v --help for more info
 #Allows you to quickly open and edit recently editted vim files
@@ -60,8 +64,86 @@ alias sc1='screen -dr hhp'
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
 
+export TERM="xterm-256color"
 
-#SSH aliases
-alias rcs='ssh campbt2@rcs.rpi.edu'
-alias malik='ssh lfdguest000@lfd.cs.rpi.edu'
+# Amazon Stuff
+#Start synergy
+alias syn='synergy &'
+alias work='cd ~/Amazon/workspace_eclipse'
+alias proj='cd ~/Amazon/projects'
+alias tools='cd ~/Amazon/sdk/platform-tools'
+alias fish='cd ~/Amazon/projects/RaftFish/src/RaftFishKindle/src/main'
+alias core='cd ~/Amazon/projects/RaftFish/src/RaftFishCore/src/main'
+alias browser='cd ~/Amazon/projects/RaftBrowser/src/RaftBrowser/src/main'
+alias launcher='cd ~/Amazon/projects/RaftLauncher/src/RaftLauncher/src/main'
+alias chat='cd ~/Amazon/projects/RaftChat/src/RaftChat/src/main'
+alias oneg='cd ~/Amazon/projects/OnegForAndroid/src/OnegForAndroid/src/main'
+alias rabbit='cd ~/Amazon/projects/RabbitAndroidApp/src/RabbitAndroidApp/'
+alias pid='pidcat'
+alias pid_b='pidcat com.amazon.raftbrowser'
+alias pid_f='pidcat com.amazon.raftfish'
+alias pid_c='pidcat com.amazon.raftchat'
+alias pid_l='pidcat com.amazon.raftlauncher'
 
+# Brazil stuff
+alias refresh='brazil ws --clean; brazil-recursive-cmd rm -rf .gradle; rm -rf ../.gradle; brazil ws --sync --md; brazil-recursive-cmd brazil-build -u'
+alias bb='brazil-build'
+alias bsync='brazil ws --sync -md'
+alias bbs='brazil ws --sync -md; brazil-build'
+
+alias adb_activities='adb shell dumpsys activity | grep -i run'
+alias raft_login="adb shell am broadcast -a com.amazon.raft.LOGIN -e com.amazon.raft.STATE LOGGED_IN -e com.amazon.raft.USERNAME tylercam"
+alias raft_logout="adb shell am broadcast -a com.amazon.raft.LOGIN -e com.amazon.raft.STATE LOGGED_OUT"
+
+# Set the following two in /etc/profile if on ubuntu for fancy airline font
+#export LANG=en_US.UTF-8
+#export LC_ALL=en_US.UTF-8
+
+alias ssh_amazon="ssh ud43d7e5a743d5130dd7e"
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# fe [FUZZY PATTERN] - Open the selected file with the default editor
+#   - Bypass fuzzy finder if there's only one match (--select-1)
+#   - Exit if there's no match (--exit-0)
+fe() {
+  local file
+  file=$(fzf --query="$1" --select-1 --exit-0)
+  [ -n "$file" ] && ${EDITOR:-vim} "$file"
+}
+
+# fd - cd to selected directory
+fd() {
+  local dir
+  dir=$(find ${1:-*} -path '*/\.*' -prune \
+                  -o -type d \
+                  -not -path "*/build/*" \
+                  -not -path "*/env/*" \
+                  -print 2> /dev/null | fzf +m) &&
+  cd "$dir"
+}
+
+# fh - repeat history
+fh() {
+  eval $(([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s | sed 's/ *[0-9]* *//')
+}
+
+# fkill - kill process
+fkill() {
+  ps -ef | sed 1d | fzf -m | awk '{print $2}' | xargs kill -${1:-9}
+}
+
+# fbr - checkout git branch
+fbr() {
+  local branches branch
+  branches=$(git branch) &&
+  branch=$(echo "$branches" | fzf +s +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //")
+}
+
+# fco - checkout git commit
+fco() {
+  local commits commit
+  commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
+  commit=$(echo "$commits" | fzf +s +m -e) &&
+  git checkout $(echo "$commit" | sed "s/ .*//")
+}
