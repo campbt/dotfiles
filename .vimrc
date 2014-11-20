@@ -130,15 +130,23 @@
     "Indexed Search - shows 'at x of N when searching'
     Bundle 'IndexedSearch'
 
-    " vim-session - use good session manager ( Misc needed for vim-session )
-    Bundle 'xolox/vim-session'
-    Bundle 'xolox/vim-misc' 
-
     " Shows changed lines since last git commit
     Bundle 'mhinz/vim-signify'
 
     " Better JSON Support
     Bundle 'elzr/vim-json'
+
+    " Gotham Colorscheme
+    Bundle 'whatyouhide/vim-gotham'
+
+    " Misc install needed for some (vim-session and vim-easytags)
+    Bundle 'xolox/vim-misc' 
+
+    " vim-session - use good session manager ( Misc needed for vim-session )
+    Bundle 'xolox/vim-session'
+
+    " Easy Tags
+    Bundle 'xolox/vim-easytags'
 
     " You Complete Me - Fuzzy finding auto completion
     Bundle 'Valloric/YouCompleteMe'
@@ -186,6 +194,7 @@
     "colorscheme lucius 
     "LuciusDark 
     colorscheme smyck
+    "colorscheme gotham
 
     " Run gvimrc commands First
     if has("gui_macvim")
@@ -276,6 +285,9 @@
     au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
       \| exe "normal g'\"" | endif
     endif
+
+    " Reload when entering buffer or gaining focus
+    au FocusGained,BufEnter * :silent! !
 
     " ================
     " File Type Specific Settings
@@ -459,6 +471,7 @@
      let g:ctrlp_map = '<Leader>o'
      let g:ctrlp_max_height = 15
      let g:ctrlp_highlight_match = [1, 'Type']
+     let g:ctrlp_switch_buffer = 'et'
 
 		 noremap <Leader>O :CtrlPBuffer<CR>
 		 noremap <Leader><Leader>o :CtrlPMRUFiles<CR>

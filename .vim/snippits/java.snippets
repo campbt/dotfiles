@@ -1,14 +1,44 @@
 
-snippet rd "RLog Debug"
-RLog.debug("$1");$0
+snippet lv "RLog Debug"
+Log.v(TAG, "$1");$0
 endsnippet
 
-snippet ri "RLog Info"
-RLog.info("$1");$0
+snippet li "RLog Info"
+Log.i(TAG, "$1");$0
 endsnippet
 
-snippet re "RLog Error"
-RLog.error("$1");$0
+snippet ee "RLog Error"
+Log.e(TAG, "$1");$0
+endsnippet
+
+snippet ld "Log debug"
+Log.d("debug","$1");$0
+endsnippet
+
+snippet toast "Toast"
+Toast.makeText(this,"$1", Toast.LENGTH_SHORT).show();$0
+endsnippet
+
+snippet tag "Adds tag"
+private static final String TAG = "$0";
+endsnippet
+
+snippet uithread "Code to run some code on the main UI thread"
+new Handler(Looper.getMainLooper()).post(new Runnable() {
+    @Override
+    public void run() {
+        //CODE HERE
+    }
+});
+endsnippet
+
+snippet onclick "On Click maker"
+$1.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        $0
+    }
+});
 endsnippet
 
 snippet /* "Method comment"
