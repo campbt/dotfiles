@@ -11,7 +11,7 @@ set -o vi
 bind -m vi-insert "\C-Space":vi-movement-mode
 
 #Colors:
-PS1='\[\e[0;32m\]\u\[\e[m\]\[\e[0;35m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'
+PS1='\[\e[1;32m\]\u\[\e[m\]\[\e[0;35m\] \[\e[0;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'
 #PS1='\[\e[0;32m\]\u\[\e[m\]\[\e[0;35m\]@\[\e[0;35m\]\h \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'
 
 # Aliases
@@ -20,11 +20,15 @@ alias vi='mvim -p'
 alias vit='vi '
 #alias ls='ls -p --group-directories-first --color=auto'
 export CLICOLOR=1
+alias bashedit='vim ~/.bashrc'
+
+# LS Colors
 #export LSCOLORS="Gxfxcxdxcxegedabagacad"
-export LSCOLORS=ExFxCxDxBxegedabagacGx
+#export LSCOLORS=ExFxCxDxBxegedabagacGx
+# For help: http://linux-sxs.org/housekeeping/lscolors.html
+export LS_COLORS='di=34:fi=0:ln=35:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=32'
 #alias ls='ls -FG'
 alias ls='gls -p --color=auto --group-directories-first'
-alias bashedit='vim ~/.bashrc'
 
 #Good git commands
 alias gitpulloverwrite='git pull -s recursive -X theirs origin r'
