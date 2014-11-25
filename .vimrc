@@ -1,15 +1,15 @@
-" 
+"
 " Tyler's Vim Config File {{
-"   v2.06 - 2012-03-08 
+"   v2.06 - 2012-03-08
 "   vim: set foldmarker={{,}} foldlevel=2 foldmethod=marker :
 " }}
-" 
+"
 
 " Cheat Sheet {{
   "This is a brief list of custom commands and what they do
   "Plus other miscellaneous information
 
-  " (Assuming \ = Leader)
+  " (Assuming \ = Leade, Space is also leader)
   " <C-Space>    : Esc (in insert mode)
   " \n           : Nerdtree Open Directory
   " \F2          : Colorize Hex VAlues in Code
@@ -18,18 +18,18 @@
   " <C-P>        : Insert Directory of current file into command
   " Align        : Aligns along something: ex: : 5 , 10 Align => (aligns on => for lines 5 through 10
   " \o           : Brings up Searching for files in current directory
-  " \]           : ZoomWin, when in split windows, zooms into the current one, \\ zooms out again
+  " gz           : ZoomWin, when in split windows, zooms into the current one, \\ zooms out again
   " \cd          : Changes directory to the current files
   " \mw          : Mark Window for Swapping
   " \ms          : Swap Current Window with one marked
   " \p           : Open up Yank Ring
-  " \\w          : EasyMove by word forward (b for backward)
+  " \w          : EasyMove by word forward (\\b for backward)
   " \\_          : EasyMove - j,k lines, w/b, words, e end of words, /,? for search
   "   \j, \k, \w : are same as \\j \\k \\w
    "<D-/> or \/  : Comment out a line
   " \c           : NerdComment (add letter after c for option)
   " S-Up         : Move Line Up (Down to move it down)
-  " ultisnips    : 
+  " ultisnips    :
   " Tabularize   : Aligns text based on a regex
   " surround     : (supports more than ()'s, just used as example)
   "   ys(        : add () surround
@@ -140,13 +140,19 @@
     Bundle 'whatyouhide/vim-gotham'
 
     " Misc install needed for some (vim-session and vim-easytags)
-    Bundle 'xolox/vim-misc' 
+    Bundle 'xolox/vim-misc'
 
     " vim-session - use good session manager ( Misc needed for vim-session )
     Bundle 'xolox/vim-session'
 
+    " Improves words (allows i and a to work on more things and adds I and A. Ex: cI")
+    Bundle 'wellle/targets.vim'
+
     " Easy Tags
     Bundle 'xolox/vim-easytags'
+
+    " Dash (MAC ONLY)
+    Bundle 'rizzatti/dash.vim'
 
     " You Complete Me - Fuzzy finding auto completion
     Bundle 'Valloric/YouCompleteMe'
@@ -176,10 +182,10 @@
     " Maybe Add Sometime later for Python
     "Bundle 'nathanaelkane/vim-indent-guides'
 
-    "Scala Syntax Files 
+    "Scala Syntax Files
     "(Copied and slightly modified so not imported in Vundle)
-	"Bundle 'derekwyatt/vim-scala' 
-	
+	"Bundle 'derekwyatt/vim-scala'
+
   " }}
 " }}
 
@@ -191,10 +197,8 @@
       " NOTE : This colorscheme will support 256 Color terminals for OS X
       " Not sure how it looks in other OS's yet
     "color tyler_dim
-    "colorscheme lucius 
-    "LuciusDark 
-    colorscheme smyck
-    "colorscheme gotham
+    "colorscheme smyck
+    colorscheme atom-dark
 
     " Run gvimrc commands First
     if has("gui_macvim")
@@ -244,7 +248,7 @@
 
     " Status Line
     "set stl=%f\ %m\ %r%{fugitive#statusline()}\ Line:%l/%L[%p%%]\ Col:%v\ Buf:#%n\ [%b][0x%B]
-    set statusline=%f\ %r%{fugitive#statusline()}%m%h%=(%l/%L,\ %c)\ %3p%%\ %w\ %y\ [%{&encoding}:%{&fileformat}]\ \ 
+    set statusline=%f\ %r%{fugitive#statusline()}%m%h%=(%l/%L,\ %c)\ %3p%%\ %w\ %y\ [%{&encoding}:%{&fileformat}]\ \
 
     " Set up the gui cursor to look nice
     set guicursor=n-v-c:block-Cursor-blinkon0,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor,r-cr:hor20-Cursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
@@ -280,6 +284,12 @@
     autocmd BufEnter * setlocal cursorline
     autocmd BufLeave * setlocal nocursorline
 
+    " Trim whitespace on save (has problems moving cursor around)
+    autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
+    " Return cursor to previous location on load
+    autocmd BufReadPost * normal `"
+
     " Remember last location in file
     if has("autocmd")
     au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
@@ -303,9 +313,18 @@
 
     " Ctrl-Space to leave insert mode
     noremap <C-Space> <Esc>
+    nnoremap <C-Space> <Esc>:noh<CR>
     inoremap <C-Space> <Esc>
+    vnoremap <C-Space> <Esc>
+    cnoremap <C-Space> <Esc>
+    onoremap <C-Space> <Esc>
     " Allows OS X Terminal to use Ctrl-Space
+    noremap <C-@> <Esc>
+    nnoremap <C-@> <Esc>:noh<CR>
     inoremap <C-@> <Esc>
+    vnoremap <C-@> <Esc>
+    cnoremap <C-@> <Esc>
+    onoremap <C-@> <Esc>
 
     " Ctrl-] To push everything else to the next line and then hit Enter
     " Ideal for opening {}
@@ -321,8 +340,12 @@
 
     " Space in normal mode removes annoying search highlighting
     " Space also gets out of v mode
-    nnoremap <Space> :noh<CR>
-    vnoremap <Space> <Esc>
+    nmap <Space> <Leader>
+    nmap <Space><Space> <Leader><Leader>
+    vmap <Space> <Leader>
+    vmap <Space><Space> <Leader><Leader>
+    "nnoremap <Space> :noh<CR>
+    "vnoremap <Space> <Esc>
 
     " Easier moving in tabs and windows
     map <C-J> <C-W>j
@@ -332,7 +355,7 @@
 
     "Shift H and L for moving between tabs
     " The following two lines conflict with moving to top and bottom of the screen
-    map <S-H> gT          
+    map <S-H> gT
     map <S-L> gt
 
     nmap j gj
@@ -360,9 +383,12 @@
     " Change working directory to current file's location
     nmap <silent> <Leader>cd :cd %:p:h<CR>
 
-    " Make horizontal scrolling easier
-    nmap <silent> <C-o> 10zl
-    nmap <silent> <C-i> 10zh
+    " Make horizontal scrolling easier (zh is left, zl is right)
+    nmap <silent> <C-n> 10zh
+    nmap <silent> <C-m> 10zl
+
+    " Remove highlight
+    nmap <Leader>h :noh<CR>
 
     "Editing Vimrc File
     nmap <silent> <Leader>ve :e $MYVIMRC<CR>
@@ -374,7 +400,7 @@
 
     " Opens a tab edit command with the path of the currently edited file filled in
     " Normal mode: <Leader>t
-    map <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
+    "map <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
     map <Leader>mw :call MarkWindowSwap()<CR>
     map <Leader>ms :call DoWindowSwap()<CR>
@@ -419,7 +445,7 @@
 
 " Plugin Settings {{
   "Most custom mappings here should involve <Leader> key
-  
+
   " eclim settings {{
       autocmd Filetype java imap <C-w> <C-x><C-u><C-p>
       autocmd Filetype java map <C-n> :JavaSearch -a edit<CR>
@@ -463,23 +489,24 @@
   " }}
 
    "ZoomWin Settings {{
-    map <Leader>] :ZoomWin<CR>
+    map gz :ZoomWin<CR>
   " }}
 
   " Ctrl-P Settings {{
-     "Change mapping to \o (open) 
+     "Change mapping to \o (open)
      let g:ctrlp_map = '<Leader>o'
      let g:ctrlp_max_height = 15
      let g:ctrlp_highlight_match = [1, 'Type']
-     let g:ctrlp_switch_buffer = 'et'
+     let g:ctrlp_switch_buffer = 'tHV'
+     let g:ctrlp_open_new_file = 'r'
 
-		 noremap <Leader>O :CtrlPBuffer<CR>
-		 noremap <Leader><Leader>o :CtrlPMRUFiles<CR>
+     noremap <Leader>O :CtrlPBuffer<CR>
+     noremap <Leader><Leader>o :CtrlPMRUFiles<CR>
 
      "Don't allow searching for hidden files/folders
      let g:ctrlp_dotfiles = 0
   " }}
-  
+
   " UltiSnippits Settings {{
     " Also looks in snippits folder in default .vim folder
     let g:UltiSnipsSnippetDirectories=["UltiSnips", "snippits"]
@@ -496,14 +523,14 @@
   " }}
 
   " Airline Settings {{
-      "set statusline=%f\ %r%{fugitive#statusline()}%m%h%=(%l/%L,\ %c)\ %3p%%\ %w\ %y\ [%{&encoding}:%{&fileformat}]\ \ 
+      "set statusline=%f\ %r%{fugitive#statusline()}%m%h%=(%l/%L,\ %c)\ %3p%%\ %w\ %y\ [%{&encoding}:%{&fileformat}]\ \
       let g:airline_enable_hunks = 0 " Gets errors when this is enabled
       let g:airline_theme = 'bubblegum'
       let g:airline#extensions#whitespace#enabled = 0 " Who cares about whitespace?
       "let g:airline_section_b = '%<%{expand("%:h")}/' " The relative path to the file
       "let g:airline_section_c = '%<%t%m' " The file name (%t), if it has been modified (%m)
       let g:airline_section_x = '%{airline#extensions#tagbar#currenttag()}' " Shows the method the cursor is in
-      let g:airline_section_x = '' " Shows the method the cursor is in
+      "let g:airline_section_x = '' " Shows the method the cursor is in
       "let g:airline_section_y = '%{airline#util#wrap(airline#extensions#branch#get_head(),0)}' " Shows the current branch
       let g:airline_section_y = '%{airline#util#wrap(airline#parts#filetype(),0)}' " Shows the file type
       let g:airline_section_z = '%l/%L : %c' " Shows the line number and column number of cursor
@@ -514,7 +541,7 @@
       set encoding=utf-8
       set fillchars+=stl:\ ,stlnc:\
       let g:airline_powerline_fonts = 1
-      
+
       " Modifies the colorscheme a bit
       let g:airline_theme_patch_func = 'AirlineThemePatch'
       function! AirlineThemePatch(palette)
@@ -525,7 +552,7 @@
         endif
       endfunction
   " }}
- 
+
   " Yankring Settings {{
     nnoremap <silent> <Leader>p :YRShow<CR>
   " }}
@@ -535,6 +562,8 @@
     map <Leader>j <Leader><Leader>j
     map <Leader>k <Leader><Leader>k
     map <Leader>w <Leader><Leader>w
+    map <Leader>f <Leader><Leader>f
+    map <Leader>t <Leader><Leader>t
   " }}
 
   " Autoclose Settings {{
@@ -544,13 +573,13 @@
               "\ let b:AutoClosePairs = AutoClose#DefaultPairsModified("","<")
 
     " Filetype specific pairs:
-    "autocmd FileType ruby 
+    "autocmd FileType ruby
               "\ let b:AutoClosePairs = AutoClose#DefaultPairsModified("|", "<")
-    "autocmd FileType html 
+    "autocmd FileType html
               "\ let b:AutoClosePairs = AutoClose#DefaultPairsModified("% #", "")
 
-    
-  
+
+
   " }}
   "
   " delimitMate Settings {{
@@ -559,7 +588,7 @@
   " }}
 
   " TagBar Settings {{
-  
+
     " TagBar Toggle Hotkey
     map <Leader>b :TagbarOpenAutoClose<CR>
     map <Leader>B :TagbarToggle<CR>
@@ -581,7 +610,7 @@
           \ 'r:cclasses',
           \ 'm:methods'
           \ ]
-      \ } 
+      \ }
 
   " }}
 
@@ -597,7 +626,7 @@
     nmap <leader>gl :Glog<cr>
     nmap <leader>gd :Gdiff<cr>
   " }}
-  
+
   " vim-sessions Settings {{
     let g:session_autoload = 'no'
     let g:session_autosave = 'yes'
@@ -663,9 +692,26 @@
         "Switch to dest and shuffle source->dest
         exe curNum . "wincmd w"
         "Hide and open so that we aren't prompted and keep history
-        exe 'hide buf' markedBuf 
+        exe 'hide buf' markedBuf
     endfunction
   " }}
+
+  " Dash Function
+  nmap <expr> K <SID>doc(":Dash<CR>")
+  function! s:doc(cmd)
+      if exists(':Dash')
+          return a:cmd
+      endif
+      return 'K'
+  endfunction
+
+  " Delete trailing whitespace
+  function! <SID>StripTrailingWhitespaces()
+      let l = line(".")
+      let c = col(".")
+      %s/\s\+$//e
+      call cursor(l, c)
+  endfun
 
   "MiniMap {{
   "makes the text really tiny so you can see an overview of the code
@@ -673,7 +719,7 @@
   "  You need ProggyTinyTT
   "  You can DL it from here: http://www.dafont.com/proggy-tiny.font
   "
-  " Make sure you set your default font in this method 
+  " Make sure you set your default font in this method
   "
   function! ToggleMinimap()
     if exists("s:isMini") && s:isMini == 0
@@ -699,7 +745,7 @@
 
       " make font small
       set guifont=ProggyTinyTT:h1
-      
+
       " highlight lines which were visible
       let s:lines = ""
       for i in range(s:firstLine, s:lastLine)
