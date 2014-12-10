@@ -26,7 +26,7 @@ alias bashedit='vim ~/.bashrc'
 #export LSCOLORS="Gxfxcxdxcxegedabagacad"
 #export LSCOLORS=ExFxCxDxBxegedabagacGx
 # For help: http://linux-sxs.org/housekeeping/lscolors.html
-export LS_COLORS='di=34:fi=0:ln=35:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=32'
+export LS_COLORS='di=34:ln=35:pi=5:so=5:bd=5:cd=5:ex=32:su=0:sg=0:tw=0:ow=0:'
 #alias ls='ls -FG'
 alias ls='gls -p --color=auto --group-directories-first'
 
@@ -42,7 +42,7 @@ alias gk='git checkout'
 alias gkm='git checkout master'
 alias gpo='git push origin'
 alias gpom='git push origin master'
-alias gg='git log --graph --oneline --all'                                                                                                 
+alias gg='git log --graph --oneline --all'
 alias gl='git log --graph --full-history --all --color --date=short --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%ad %s"'
 alias gll="git log -p -40 | vim - -R -c 'set foldmethod=syntax'"
 alias gundo='git reset --soft HEAD^'
@@ -53,7 +53,7 @@ alias v='~/.vim/bash/v'
 
 #Quickly turn on/off hidden files
 function hiddenToggle() {
-  defaults write com.apple.finder AppleShowAllFiles "$1" 
+  defaults write com.apple.finder AppleShowAllFiles "$1"
   killall Finder
 }
 alias hiddenon='hiddenToggle TRUE'
@@ -76,12 +76,12 @@ alias syn='synergy &'
 alias work='cd ~/Amazon/workspace_eclipse'
 alias proj='cd ~/Amazon/projects'
 alias tools='cd ~/Amazon/sdk/platform-tools'
-alias fish='cd ~/Amazon/projects/RaftFish/src/RaftFishKindle/src/main'
+alias fish='cd ~/Amazon/projects/RaftFish/src/RaftFishKindle'
 alias core='cd ~/Amazon/projects/RaftFish/src/RaftFishCore/src/main'
-alias browser='cd ~/Amazon/projects/RaftBrowser/src/RaftBrowser/src/main'
-alias launcher='cd ~/Amazon/projects/RaftLauncher/src/RaftLauncher/src/main'
-alias chat='cd ~/Amazon/projects/RaftChat/src/RaftChat/src/main'
-alias oneg='cd ~/Amazon/projects/OnegForAndroid/src/OnegForAndroid/src/main'
+alias browser='cd ~/Amazon/projects/RaftBrowser/src/RaftBrowser'
+alias launcher='cd ~/Amazon/projects/RaftLauncher/src/RaftLauncher'
+alias chat='cd ~/Amazon/projects/RaftChat/src/RaftChat'
+alias oneg='cd ~/Amazon/projects/OnegForAndroid/src/OnegForAndroid'
 alias rabbit='cd ~/Amazon/projects/RabbitAndroidApp/src/RabbitAndroidApp/'
 alias pid='pidcat'
 alias pid_b='pidcat com.amazon.raftbrowser'

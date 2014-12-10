@@ -384,8 +384,10 @@
     nmap <silent> <Leader>cd :cd %:p:h<CR>
 
     " Make horizontal scrolling easier (zh is left, zl is right)
-    nmap <silent> <C-n> 10zh
-    nmap <silent> <C-m> 10zl
+    nmap <silent> <C-y> 10zh
+    nmap <silent> <C-p> 10zl
+    "nmap <silent> <C-y> <C-o>
+    "nmap <silent> <C-p> <C-i>
 
     " Remove highlight
     nmap <Leader>h :noh<CR>
