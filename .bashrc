@@ -1,9 +1,7 @@
-export PATH=~/bin:$PATH
 export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/sbin:/usr/local/git/bin:/usr/local/mysql/bin:$PATH
-export PATH=~/Amazon/Cloud9BrazilBuild-1.0/bin:$PATH
-export PATH=~/Amazon/sdk/platform-tools:$PATH
-export PATH="/apollo/env/ruby193/bin:/apollo/env/SDETools/bin:$PATH"
+export PATH=~/bin:$PATH
+export PATH=~/homebrew/bin:$PATH
 export EDITOR=vim
 
 # Vi mode ya!
@@ -34,6 +32,7 @@ alias ls='gls -p --color=auto --group-directories-first'
 alias gitpulloverwrite='git pull -s recursive -X theirs origin r'
 alias gs='git status'
 alias gd='git diff --color'
+alias gd='git diff --staged --color'
 alias gc='git commit'
 alias ga='git add'
 alias gaa='git add -A'
@@ -70,41 +69,20 @@ bind '"\e[B": history-search-forward'
 
 export TERM="xterm-256color"
 
-# Amazon Stuff
-#Start synergy
-alias syn='synergy &'
-alias work='cd ~/Amazon/workspace_eclipse'
-alias proj='cd ~/Amazon/projects'
-alias tools='cd ~/Amazon/sdk/platform-tools'
-alias fish='cd ~/Amazon/projects/RaftFish/src/RaftFishKindle'
-alias core='cd ~/Amazon/projects/RaftFish/src/RaftFishCore/src/main'
-alias browser='cd ~/Amazon/projects/RaftBrowser/src/RaftBrowser'
-alias launcher='cd ~/Amazon/projects/RaftLauncher/src/RaftLauncher'
-alias chat='cd ~/Amazon/projects/RaftChat/src/RaftChat'
-alias oneg='cd ~/Amazon/projects/OnegForAndroid/src/OnegForAndroid'
-alias rabbit='cd ~/Amazon/projects/RabbitAndroidApp/src/RabbitAndroidApp/'
-alias pid='pidcat'
-alias pid_b='pidcat com.amazon.raftbrowser'
-alias pid_f='pidcat com.amazon.raftfish'
-alias pid_c='pidcat com.amazon.raftchat'
-alias pid_l='pidcat com.amazon.raftlauncher'
-
-# Brazil stuff
-alias refresh='brazil ws --clean; brazil-recursive-cmd rm -rf .gradle; rm -rf ../.gradle; brazil ws --sync --md; brazil-recursive-cmd brazil-build -u'
-alias bb='brazil-build'
-alias bsync='brazil ws --sync -md'
-alias bbs='brazil ws --sync -md; brazil-build'
-
+# ADB Helpful commands
 alias adb_activities='adb shell dumpsys activity | grep -i run'
-alias raft_login="adb shell am broadcast -a com.amazon.raft.LOGIN -e com.amazon.raft.STATE LOGGED_IN -e com.amazon.raft.USERNAME tylercam"
-alias raft_logout="adb shell am broadcast -a com.amazon.raft.LOGIN -e com.amazon.raft.STATE LOGGED_OUT"
+alias adbr='adb kill-server; adb start-server'
+alias adb_wifi_on='adb shell svc wifi enable'
+alias adb_wifi_off='adb shell svc wifi disable'
 
 # Set the following two in /etc/profile if on ubuntu for fancy airline font
 #export LANG=en_US.UTF-8
 #export LC_ALL=en_US.UTF-8
 
-alias ssh_amazon="ssh ud43d7e5a743d5130dd7e"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# Bashmarks
+source ~/.local/bin/bashmarks.sh
 
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
 #   - Bypass fuzzy finder if there's only one match (--select-1)

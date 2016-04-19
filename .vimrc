@@ -16,8 +16,8 @@
   " \e           : :e {directory of current file}/ (open in current buffer)
   " \te          : same as \e except opens in new tab
   " <C-P>        : Insert Directory of current file into command
-  " Align        : Aligns along something: ex: : 5 , 10 Align => (aligns on => for lines 5 through 10
   " \o           : Brings up Searching for files in current directory
+  " \\l          : FuzzyFind Lines in file
   " gz           : ZoomWin, when in split windows, zooms into the current one, \\ zooms out again
   " \cd          : Changes directory to the current files
   " \mw          : Mark Window for Swapping
@@ -26,9 +26,10 @@
   " \w          : EasyMove by word forward (\\b for backward)
   " \\_          : EasyMove - j,k lines, w/b, words, e end of words, /,? for search
   "   \j, \k, \w : are same as \\j \\k \\w
+  " s            : EasyMove search
    "<D-/> or \/  : Comment out a line
   " \c           : NerdComment (add letter after c for option)
-  " S-Up         : Move Line Up (Down to move it down)
+  " S-Up/Down    : Move Line Up (Down to move it down)
   " ultisnips    :
   " Tabularize   : Aligns text based on a regex
   " surround     : (supports more than ()'s, just used as example)
@@ -85,10 +86,11 @@
     "Bundle 'molok/vim-smartusline'
 
     "" vim-airline - cool status line
-    Bundle 'bling/vim-airline'
+    Bundle 'vim-airline/vim-airline'
+    Bundle 'vim-airline/vim-airline-themes'
 
     "" Yankring - Great yanking \p to open yankring
-    Bundle 'chrismetcalf/vim-yankring'
+    Bundle 'vim-scripts/YankRing.vim'
 
     "" Pasta - Much better pasting - all passive
     Bundle 'sickill/vim-pasta'
@@ -127,8 +129,8 @@
     " Fugitive - Git wrapper
     Bundle 'tpope/vim-fugitive'
 
-    "Indexed Search - shows 'at x of N when searching'
-    Bundle 'IndexedSearch'
+    "Indexed Search - shows 'at x of N when searching' [ BUG it took my keybindings for easymotion?? ]
+    "Bundle 'IndexedSearch'
 
     " Shows changed lines since last git commit
     Bundle 'mhinz/vim-signify'
@@ -161,6 +163,7 @@
     "   https://github.com/Valloric/YouCompleteMe
     "
     "   try: cd ~/.vim/bundle/YouCompleteMe
+    "   git submodule update --init --recursive
     "    ./install.sh
     "
     "    (If it doesn't work you'll need to install CMake and stuff. Read the readme)
@@ -233,9 +236,9 @@
     " }}
 
     " Backups {{
-    set undodir=~/.vim/tmp/undo//     " undo files
-    set backupdir=~/.vim/tmp/backup// " backups
-    set directory=~/.vim/tmp/swap//   " swap files
+    set undodir=~/.vim/tmp/undo/     " undo files
+    set backupdir=~/.vim/tmp/backup/ " backups
+    set directory=~/.vim/tmp/swap/   " swap files
     set backup                        " enable backups
     set noswapfile                    " It's 2012, Vim.
     " }}
@@ -502,8 +505,19 @@
      let g:ctrlp_switch_buffer = 'tHV'
      let g:ctrlp_open_new_file = 'r'
 
+     " If in a git directory, just use git ls-files
+     "let g:ctrlp_custom_ignore = {
+         "\ 'types': {
+         "\ 1: ['.git', 'cd %s && git ls-files --cached --exclude-standard --others'],
+         "\ 2: ['.hg', 'hg --cwd %s locate -I .'],
+         "\ },
+         "\ 'fallback': 'find %s -type f'
+         "\ }
+     let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+
      noremap <Leader>O :CtrlPBuffer<CR>
      noremap <Leader><Leader>o :CtrlPMRUFiles<CR>
+     noremap <Leader><Leader>l :CtrlPLine<CR>
 
      "Don't allow searching for hidden files/folders
      let g:ctrlp_dotfiles = 0
@@ -561,11 +575,26 @@
 
   " EasyMotion Settings {{
     "Commonly used ones may be used with only one leader press
-    map <Leader>j <Leader><Leader>j
-    map <Leader>k <Leader><Leader>k
     map <Leader>w <Leader><Leader>w
     map <Leader>f <Leader><Leader>f
     map <Leader>t <Leader><Leader>t
+
+    " Sexy hjkl movement
+    map <Leader>l <Plug>(easymotion-lineforward)
+    map <Leader>j <Plug>(easymotion-j)
+    map <Leader>k <Plug>(easymotion-k)
+    map <Leader>h <Plug>(easymotion-linebackward)
+
+    " Better search (use Tab / S-Tab to scroll; press CR to turn on EasyMotion)
+    "map  / <Plug>(easymotion-sn)
+    "omap / <Plug>(easymotion-tn)
+    "map  n <Plug>(easymotion-next)
+    "map  N <Plug>(easymotion-prev)
+
+    nmap s <Plug>(easymotion-s)
+
+    let g:EasyMotion_smartcase = 1
+    let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
   " }}
 
   " Autoclose Settings {{
@@ -628,6 +657,8 @@
     nmap <leader>gl :Glog<cr>
     nmap <leader>gd :Gdiff<cr>
   " }}
+  " Vertical diffs
+    set diffopt+=vertical
 
   " vim-sessions Settings {{
     let g:session_autoload = 'no'
@@ -637,6 +668,7 @@
   " vim-signify Settings {{
     let g:signify_sign_overwrite = 0 " May not play nice with eclim
     let g:signify_sign_delete_first_line = '-' " Default character doesnt work on ubuntu??
+    nmap <leader>gh :SignifyToggleHighlight<cr>
   " }}
 
 " -------
@@ -699,7 +731,7 @@
   " }}
 
   " Dash Function
-  nmap <expr> K <SID>doc(":Dash<CR>")
+  nmap <expr> K <SID>doc(":Dash!<CR>")
   function! s:doc(cmd)
       if exists(':Dash')
           return a:cmd
@@ -714,62 +746,4 @@
       %s/\s\+$//e
       call cursor(l, c)
   endfun
-
-  "MiniMap {{
-  "makes the text really tiny so you can see an overview of the code
-  "INSTALL NOTES :
-  "  You need ProggyTinyTT
-  "  You can DL it from here: http://www.dafont.com/proggy-tiny.font
-  "
-  " Make sure you set your default font in this method
-  "
-  function! ToggleMinimap()
-    if exists("s:isMini") && s:isMini == 0
-      let s:isMini = 1
-    else
-      let s:isMini = 0
-    end
-
-    if (s:isMini == 0)
-      " save current visible lines
-      let s:firstLine = line("w0")
-      let s:lastLine = line("w$")
-
-      " resize each window
-      " windo let w=winwidth(0)*12 | exe "set winwidth=" . w
-      " windo let h=winheight(0)*12 | exe "set winheight=" . h
-
-      " don't change window size
-      "let c = &columns * 12
-      "let l = &lines * 12
-      "exe "set columns=" . c
-      "exe "set lines=" . l
-
-      " make font small
-      set guifont=ProggyTinyTT:h1
-
-      " highlight lines which were visible
-      let s:lines = ""
-      for i in range(s:firstLine, s:lastLine)
-        let s:lines = s:lines . "\\%" . i . "l"
-
-        if i < s:lastLine
-          let s:lines = s:lines . "\\|"
-        endif
-      endfor
-
-      exe 'match Visible /' . s:lines . '/'
-      hi Visible guibg=lightblue guifg=black term=bold
-    else
-      set guifont=Menlo:h11
-      hi clear Visible
-    endif
-  endfunction
-
-  command! ToggleMinimap call ToggleMinimap()
-  "nnoremap <Leader>m :ToggleMinimap<CR>
-
-  " }}
-
-
 " }}
