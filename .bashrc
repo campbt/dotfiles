@@ -32,7 +32,7 @@ alias ls='gls -p --color=auto --group-directories-first'
 alias gitpulloverwrite='git pull -s recursive -X theirs origin r'
 alias gs='git status'
 alias gd='git diff --color'
-alias gd='git diff --staged --color'
+alias gdd='git diff --staged --color'
 alias gc='git commit'
 alias ga='git add'
 alias gaa='git add -A'
@@ -74,6 +74,11 @@ alias adb_activities='adb shell dumpsys activity | grep -i run'
 alias adbr='adb kill-server; adb start-server'
 alias adb_wifi_on='adb shell svc wifi enable'
 alias adb_wifi_off='adb shell svc wifi disable'
+alias pid="pidcat"
+alias pidm="adb logcat -v brief | pidcat"
+
+# ICE swift project
+alias kitten="SourceKittenDaemon start --project ~/Code/ice_mobile_ios/apps/ICEMobile/ICEMobile.xcodeproj" # Boots up SourceKitten for the ICEMobile project
 
 # Set the following two in /etc/profile if on ubuntu for fancy airline font
 #export LANG=en_US.UTF-8

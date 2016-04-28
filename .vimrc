@@ -189,6 +189,11 @@
     "(Copied and slightly modified so not imported in Vundle)
 	"Bundle 'derekwyatt/vim-scala'
 
+    " Swift Syntax Files
+    "Bundle 'keith/swift.vim'
+    " Swift auto complete
+    Bundle 'keith/sourcekittendaemon.vim'
+
   " }}
 " }}
 
@@ -669,6 +674,19 @@
     let g:signify_sign_overwrite = 0 " May not play nice with eclim
     let g:signify_sign_delete_first_line = '-' " Default character doesnt work on ubuntu??
     nmap <leader>gh :SignifyToggleHighlight<cr>
+  " }}
+
+  " sourcekitten Settings (swift autocomplete) {{
+      autocmd Filetype swift imap <C-w> <C-x><C-o>
+
+      let g:ycm_semantic_triggers =  {
+                  \ 'swift,cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+                  \ }
+
+      " Lets eclim play work with YouCompelteMe
+      "autocmd Filetype swift runtime! autoload/eclim/<amatch>/complete.vim
+          "\ | let s:cfunc = 'eclim#'.expand('<amatch>').'#complete#CodeComplete'
+          "\ | if exists('*'.s:cfunc) | let &l:omnifunc=s:cfunc | endif
   " }}
 
 " -------
