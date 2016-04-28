@@ -206,7 +206,8 @@
       " Not sure how it looks in other OS's yet
     "color tyler_dim
     "colorscheme smyck
-    colorscheme atom-dark
+    "colorscheme atom-dark
+    colorscheme tyler-atom
 
     " Run gvimrc commands First
     if has("gui_macvim")
