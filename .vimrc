@@ -48,6 +48,8 @@
   " F2           : Toggle Paste mode on/off
   " \gh          : Toggle highlight lines changed since last commit
   " c] c[        : Move to next chunk of changes since last commit
+  " gp           : Visually Select recently pasted text
+  " \K           : Grep the word the cursor is on
 " }}
 
 " ---------
@@ -447,9 +449,24 @@
     set pastetoggle=<F2>
     set showmode
 
+    " Select recently pasted text
+    nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
     " Location list quick commands (useful for navigating eclim errors)
     map [l :ll<CR>:lprev<CR>
     map ]l :ll<CR>:lnext<CR>
+
+    " Better grepping
+    command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+
+    " grep word under cursor
+    nnoremap <Leader>K :Ag <C-R><C-W><CR>
+
+    " Use The Silver Searcher if we have it
+     if executable('ag')
+       " Use ag over grep
+       set grepprg=ag\ --nogroup\ --nocolor
+     endif
  " }}
 
 " -------
@@ -577,6 +594,7 @@
 
   " Yankring Settings {{
     nnoremap <silent> <Leader>p :YRShow<CR>
+    let g_yankring_paste_using_g = 0 " Conflicts with the select last paste binding
   " }}
 
   " EasyMotion Settings {{
@@ -680,9 +698,10 @@
   " sourcekitten Settings (swift autocomplete) {{
       autocmd Filetype swift imap <C-w> <C-x><C-o>
 
-      let g:ycm_semantic_triggers =  {
-                  \ 'swift,cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-                  \ }
+      " Hooks in swift to ycm
+      "let g:ycm_semantic_triggers =  {
+                  "\ 'swift,cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+                  "\ }
 
       " Lets eclim play work with YouCompelteMe
       "autocmd Filetype swift runtime! autoload/eclim/<amatch>/complete.vim
