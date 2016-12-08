@@ -129,15 +129,91 @@ fkill() {
 # fbr - checkout git branch
 fbr() {
   local branches branch
-  branches=$(git branch) &&
-  branch=$(echo "$branches" | fzf +s +m) &&
-  git checkout $(echo "$branch" | sed "s/.* //")
+  branches=$(git branch --all | grep -v HEAD) &&
+  branch=$(echo "$branches" |
+           fzf -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
-# fco - checkout git commit
+# fco - checkout git branch/tag
 fco() {
-  local commits commit
-  commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
-  commit=$(echo "$commits" | fzf +s +m -e) &&
-  git checkout $(echo "$commit" | sed "s/ .*//")
+  local tags branches target
+  tags=$(
+    git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
+  branches=$(
+    git branch --all | grep -v HEAD             |
+    sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
+    sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
+  target=$(
+    (echo "$tags"; echo "$branches") |
+    fzf --no-hscroll --ansi +m -d "\t" -n 2) || return
+  git checkout $(echo "$target" | awk '{print $2}')
 }
+
+# fshow - git commit browser (enter for show, ctrl-d for diff, ` toggles sort)
+fshow() {
+  local out shas sha q k
+  while out=$(
+      #git log --graph --color=always \
+          #--format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+      gl |
+      fzf --ansi --multi --no-sort --reverse --query="$q" --tiebreak=index \
+          --print-query --expect=ctrl-d --toggle-sort=\`); do
+    q=$(head -1 <<< "$out")
+    k=$(head -2 <<< "$out" | tail -1)
+    shas=$(sed '1,2d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}')
+    [ -z "$shas" ] && continue
+    if [ "$k" = 'ctrl-d' ]; then
+      git diff --color=always $shas | less -R
+    else
+      for sha in $shas; do
+        git show --color=always $sha | less -R
+      done
+    fi
+  done
+}
+
+is_in_git_repo() {
+  git rev-parse HEAD > /dev/null 2>&1
+}
+
+gfzff() {
+  is_in_git_repo &&
+    git -c color.status=always status --short |
+    fzf -d 40% -m --ansi --nth 2..,.. | awk '{print $2}'
+}
+
+gfzfb() {
+  is_in_git_repo &&
+    git branch -a -vv --color=always | grep -v '/HEAD\s' |
+    fzf -d 40% --ansi --multi --tac | sed 's/^..//' | awk '{print $1}' |
+    sed 's#^remotes/[^/]*/##'
+}
+
+gfzft() {
+  is_in_git_repo &&
+    git tag --sort -version:refname |
+    fzf -d 40% --multi
+}
+
+gfzfh() {
+  is_in_git_repo &&
+    #git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph |
+      gl |
+    fzf --ansi --no-sort --reverse --multi | grep -o '[a-f0-9]\{7,\}'
+}
+
+gfzfr() {
+  is_in_git_repo &&
+    git remote -v | awk '{print $1 " " $2}' | uniq |
+    fzf -d 40% --tac | awk '{print $1}'
+}
+
+bind '"\C-g\C-e": shell-expand-line'
+bind '"\C-g\C-q": redraw-current-line'
+
+bind '"\C-g\C-f": "$(gfzff)\C-g\C-e\C-g\C-q"'
+bind '"\C-g\C-b": "$(gfzfb)\C-g\C-e\C-g\C-q"'
+bind '"\C-g\C-t": "$(gfzft)\C-g\C-e\C-g\C-q"'
+bind '"\C-g\C-h": "$(gfzfh)\C-g\C-e\C-g\C-q"'
+bind '"\C-g\C-r": "$(gfzfr)\C-g\C-e\C-g\C-q"'
