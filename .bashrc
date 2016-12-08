@@ -43,8 +43,15 @@ alias gpo='git push origin'
 alias gpom='git push origin master'
 alias gg='git log --graph --oneline --all'
 alias gl='git log --graph --full-history --all --color --date=short --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%ad %s"'
-alias gll="git log -p -40 | vim - -R -c 'set foldmethod=syntax'"
+alias gll='git log --graph --first-parent --full-history --all --color --date=short --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%ad %s"'
+alias gla='git log --graph --full-history --all --color --date=short --pretty=format:"%x1b[31m%h%x09%x1b[33m%an%x09%x1b[32m%d%x1b[0m%x20%ad %s"'
+alias glv="git log -p -40 | vim - -R -c 'set foldmethod=syntax'"
 alias gundo='git reset --soft HEAD^'
+
+# Use brew install git bash-completion
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+fi
 
 #Alisa to v script, type v --help for more info
 #Allows you to quickly open and edit recently editted vim files
