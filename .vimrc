@@ -192,9 +192,9 @@
 	"Bundle 'derekwyatt/vim-scala'
 
     " Swift Syntax Files
-    "Bundle 'keith/swift.vim'
+    Bundle 'keith/swift.vim'
     " Swift auto complete
-    Bundle 'keith/sourcekittendaemon.vim'
+    "Bundle 'keith/sourcekittendaemon.vim'
 
   " }}
 " }}
@@ -538,8 +538,17 @@
          "\ }
      let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
+     " Function to paste the current word into the CtrlP window
+     function! LazyP()
+         let g:ctrlp_default_input = expand('<cword>')
+         CtrlP
+         let g:ctrlp_default_input = ''
+     endfunction
+     command! LazyP call LazyP()
+
      noremap <Leader>O :CtrlPBuffer<CR>
      noremap <Leader><Leader>o :CtrlPMRUFiles<CR>
+     noremap <Leader><Leader>O :LazyP<CR>
      noremap <Leader><Leader>l :CtrlPLine<CR>
 
      "Don't allow searching for hidden files/folders

@@ -1,0 +1,38 @@
+snippet /// "Method comment"
+///
+/// $0
+///
+endsnippet
+
+snippet -p "Method comment - Parameters"
+- Parameter $1 : $0
+endsnippet
+
+snippet -t "Method comment - Throws"
+- Throws $1 : $0
+endsnippet
+
+snippet -r "Method comment - Returns"
+- Returns : $0
+endsnippet
+
+global !p
+def get_framework(path):
+	m = re.match(".*frameworks/([^/]*)/.*", path)
+	if m is not None:
+		return  m.group(1)
+	else:
+		return "Unknown"
+endglobal
+
+snippet head "File header"
+//
+//  `!p snip.rv = snip.fn`
+//  `!p snip.rv = get_framework(path)`
+//
+//  Created by Tyler Campbell on `date +%m/%d/%y`.
+//  Copyright © `date +%Y` The Intercontinental Exchange Inc. All rights reserved.
+//
+
+$0
+endsnippet
