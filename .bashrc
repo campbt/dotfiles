@@ -19,6 +19,7 @@ alias vit='vi '
 #alias ls='ls -p --group-directories-first --color=auto'
 export CLICOLOR=1
 alias bashedit='vim ~/.bashrc'
+alias refresh='source ~/.bashrc'
 
 # LS Colors
 #export LSCOLORS="Gxfxcxdxcxegedabagacad"
@@ -81,9 +82,12 @@ alias adb_activities='adb shell dumpsys activity | grep -i run'
 alias adbr='adb kill-server; adb start-server'
 alias adb_wifi_on='adb shell svc wifi enable'
 alias adb_wifi_off='adb shell svc wifi disable'
+alias adb_communicator='adb logcat -s ChatCommunicator'
 alias pid="pidcat"
 alias pidm="adb logcat -v brief | pidcat"
 
+# ICE android project
+alias gradle_release="./gradlew -DreleaseBuild=true clean build assemble release -x test"
 # ICE swift project
 alias kitten="SourceKittenDaemon start --project ~/Code/ice_mobile_ios/apps/ICEMobile/ICEMobile.xcodeproj" # Boots up SourceKitten for the ICEMobile project
 
@@ -212,8 +216,8 @@ gfzfr() {
 bind '"\C-g\C-e": shell-expand-line'
 bind '"\C-g\C-q": redraw-current-line'
 
-bind '"\C-g\C-f": "$(gfzff)\C-g\C-e\C-g\C-q"'
-bind '"\C-g\C-b": "$(gfzfb)\C-g\C-e\C-g\C-q"'
-bind '"\C-g\C-t": "$(gfzft)\C-g\C-e\C-g\C-q"'
-bind '"\C-g\C-h": "$(gfzfh)\C-g\C-e\C-g\C-q"'
-bind '"\C-g\C-r": "$(gfzfr)\C-g\C-e\C-g\C-q"'
+bind '"\C-g\C-f": "$(gfzff)\C-g\C-e\C-g\C-q"' # Fuzzy find files in the git status
+bind '"\C-g\C-b": "$(gfzfb)\C-g\C-e\C-g\C-q"' # Fuzzy find git branches
+bind '"\C-g\C-t": "$(gfzft)\C-g\C-e\C-g\C-q"' # Fuzzy find git tags
+bind '"\C-g\C-h": "$(gfzfh)\C-g\C-e\C-g\C-q"' # Fuzzy find over git log and return the commit mini-hash
+bind '"\C-g\C-r": "$(gfzfr)\C-g\C-e\C-g\C-q"' # Fuzzy find over git remote repositories
