@@ -50,6 +50,10 @@
   " c] c[        : Move to next chunk of changes since last commit
   " gp           : Visually Select recently pasted text
   " \K           : Grep the word the cursor is on
+  " :Ag <>       : Silver search and throw results into quickfix
+  " :Subvert/..  : Replace multiple variants (like one/One/ONE). Ex: :Subvert/first/second/g  :Subvert/child{,ren}/adult{,s}
+  " :Remove      : Delete file and buffer
+  " :Move        : Move file and buffer
 " }}
 
 " ---------
@@ -157,6 +161,12 @@
 
     " Dash (MAC ONLY)
     Bundle 'rizzatti/dash.vim'
+
+    " Vim Eunuch (Unix Commands in Vim)
+    Bundle 'tpope/vim-eunuch'
+
+    " Vim-Abolish (substitute multiple variants of word)
+    Bundle 'tpope/vim-abolish'
 
     " You Complete Me - Fuzzy finding auto completion
     Bundle 'Valloric/YouCompleteMe'
