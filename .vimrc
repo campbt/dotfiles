@@ -11,7 +11,7 @@
 
   " (Assuming \ = Leade, Space is also leader)
   " <C-Space>    : Esc (in insert mode)
-  " \n           : Nerdtree Open Directory
+  " \n           : Nerdtree Open Directory (N opens and finds current file)
   " \F2          : Colorize Hex VAlues in Code
   " \e           : :e {directory of current file}/ (open in current buffer)
   " \te          : same as \e except opens in new tab
@@ -92,7 +92,7 @@
     Bundle 'vim-airline/vim-airline-themes'
 
     "" Yankring - Great yanking \p to open yankring
-    Bundle 'vim-scripts/YankRing.vim'
+    "Bundle 'vim-scripts/YankRing.vim'
 
     "" Pasta - Much better pasting - all passive
     Bundle 'sickill/vim-pasta'
@@ -153,7 +153,7 @@
     Bundle 'wellle/targets.vim'
 
     " Easy Tags
-    Bundle 'xolox/vim-easytags'
+    "Bundle 'xolox/vim-easytags'
 
     " Dash (MAC ONLY)
     Bundle 'rizzatti/dash.vim'
@@ -254,7 +254,7 @@
     set number
     set ruler
     set nowrap
-    set textwidth=160
+    set textwidth=0
     syntax on
 
     " Status Line
@@ -489,6 +489,7 @@
   " NERDTree Settings {{
     let NERDTreeIgnore=['\.pyc$', '\.rbc$', '\~$']
     map <Leader>n :NERDTreeToggle<CR>
+    map <Leader>N :NERDTreeFind<CR>
   " }}
 
    "NERDComment Settings {{
