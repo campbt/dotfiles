@@ -54,6 +54,7 @@
   " :Subvert/..  : Replace multiple variants (like one/One/ONE). Ex: :Subvert/first/second/g  :Subvert/child{,ren}/adult{,s}
   " :Remove      : Delete file and buffer
   " :Move        : Move file and buffer
+  " <C-S-P>      : Displays the highlight tags for the word
 " }}
 
 " ---------
@@ -804,4 +805,13 @@
       %s/\s\+$//e
       call cursor(l, c)
   endfun
+
+  " Identify current word's syntax name
+  nmap <C-S-P> :call <SID>SynStack()<CR>
+  function! <SID>SynStack()
+    if !exists("*synstack")
+      return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+  endfunc
 " }}
