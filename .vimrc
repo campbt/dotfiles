@@ -169,6 +169,8 @@
     " Vim-Abolish (substitute multiple variants of word)
     Bundle 'tpope/vim-abolish'
 
+    Bundle 'diepm/vim-rest-console'
+
     " You Complete Me - Fuzzy finding auto completion
     Bundle 'Valloric/YouCompleteMe'
     " You Complete Meet Extra Installation Notes {{
@@ -206,6 +208,9 @@
     Bundle 'keith/swift.vim'
     " Swift auto complete
     "Bundle 'keith/sourcekittendaemon.vim'
+
+    " Kotlin Syntax Files
+    Bundle 'udalov/kotlin-vim'
 
   " }}
 " }}

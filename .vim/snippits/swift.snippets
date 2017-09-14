@@ -36,3 +36,37 @@ snippet head "File header"
 
 $0
 endsnippet
+
+snippet ae "Assert Equals"
+ICEXCTAssertEqual($1, $0)
+endsnippet
+
+snippet at "Assert True"
+ICEXCTAssertTrue($0)
+endsnippet
+
+snippet an "Assert Not Nil"
+ICEXCTAssertNotNil($0)
+endsnippet
+
+snippet testcase "Full Test Case File Generation"
+//
+//  `!p snip.rv = snip.fn`
+//  `!p snip.rv = get_framework(path)`
+//
+//  Created by Tyler Campbell on `date +%m/%d/%y`.
+//  Copyright © `date +%Y` The Intercontinental Exchange Inc. All rights reserved.
+//
+
+import XCTest
+import ICEFramework
+@testable import `!p snip.rv = get_framework(path)`
+import `!p snip.rv = get_framework(path)`
+import ICEFrameworkTestSupport
+
+class `!p snip.rv = snip.basename` : ICEXCTestCase {
+}
+
+extension `!p snip.rv = snip.basename` {
+}
+endsnippet

@@ -1,7 +1,9 @@
 export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/sbin:/usr/local/git/bin:/usr/local/mysql/bin:$PATH
 export PATH=~/bin:$PATH
-export PATH=~/homebrew/bin:$PATH
+export PATH=$PATH:~/homebrew/bin
+export PATH=$PATH:~/mongodb/bin
+export PATH=$PATH:~/Library/Android/sdk/platform-tools
 export EDITOR=vim
 
 # Vi mode ya!
@@ -79,6 +81,7 @@ export TERM="xterm-256color"
 
 # ADB Helpful commands
 alias adb_activities='adb shell dumpsys activity | grep -i run'
+alias adb_stack="adb shell dumpsys activity activities | sed -En -e '/Stack #/p' -e '/Running activities/,/Run #0/p'"
 alias adbr='adb kill-server; adb start-server'
 alias adb_wifi_on='adb shell svc wifi enable'
 alias adb_wifi_off='adb shell svc wifi disable'
@@ -90,6 +93,8 @@ alias pidm="adb logcat -v brief | pidcat"
 alias gradle_release="./gradlew -DreleaseBuild=true clean build assemble release -x test"
 # ICE swift project
 alias kitten="SourceKittenDaemon start --project ~/Code/ice_mobile_ios/apps/ICEMobile/ICEMobile.xcodeproj" # Boots up SourceKitten for the ICEMobile project
+
+alias mongo="~/bin/mongod --dbpath ~/mongodb/data"
 
 # Set the following two in /etc/profile if on ubuntu for fancy airline font
 #export LANG=en_US.UTF-8
