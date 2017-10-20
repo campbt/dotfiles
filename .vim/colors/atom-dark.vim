@@ -97,9 +97,9 @@ hi Visual          cterm=none   ctermfg=none   ctermbg=8      gui=none          
 hi WarningMsg      cterm=none   ctermfg=15     ctermbg=none   gui=none guifg=#FFFFFF   guibg=#333333
 hi WildMenu        cterm=none   ctermfg=12     ctermbg=none   gui=none guifg=#66D9EF   guibg=#000000
 
-hi TabLineSel      cterm=underline   ctermfg=12     ctermbg=0      gui=none guifg=#808080   guibg=#1D1F21
-hi TabLineFill     cterm=underline   ctermfg=8      ctermbg=0      gui=none guifg=#1D1F21   guibg=#1D1F21
-hi TabLine         cterm=underline   ctermfg=8      ctermbg=0      gui=none guifg=#808080   guibg=#1D1F21
+hi TabLineSel      cterm=none   ctermfg=0     ctermbg=2      gui=none guifg=#808080   guibg=#1D1F21
+hi TabLineFill     cterm=none   ctermfg=8      ctermbg=0      gui=none guifg=#1D1F21   guibg=#1D1F21
+hi TabLine         cterm=none   ctermfg=8      ctermbg=0      gui=none guifg=#808080   guibg=#1D1F21
 
 hi Normal          cterm=none   ctermfg=7      ctermbg=none   gui=none guifg=#F8F8F2   guibg=#1D1F21
 hi Comment         cterm=none   ctermfg=8      ctermbg=none   gui=none guifg=#7C7C7C

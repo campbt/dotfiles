@@ -331,6 +331,9 @@
 
     " Json
     au FileType json set textwidth=0
+
+    " git commit messages
+    au FileType gitcommit call setpos('.', [0, 1, 1, 0]) " Start at line 0
 " }}
 
 " ----------
@@ -599,6 +602,16 @@
       "let g:airline_section_y = '%{airline#util#wrap(airline#extensions#branch#get_head(),0)}' " Shows the current branch
       let g:airline_section_y = '%{airline#util#wrap(airline#parts#filetype(),0)}' " Shows the file type
       let g:airline_section_z = '%l/%L : %c' " Shows the line number and column number of cursor
+      let g:airline#extensions#tabline#enabled = 0
+      let g:airline#extensions#tabline#show_splits = 0
+      let g:airline#extensions#tabline#buffer_min_count = 2
+      let g:airline#extensions#tabline#tab_min_count = 2
+      let g:airline#extensions#tabline#show_buffers = 0
+      let g:airline#extensions#tabline#show_tab_nr = 0
+      let g:airline#extensions#tabline#show_tab_type = 0
+      let g:airline#extensions#tabline#left_sep = ''
+      let g:airline#extensions#tabline#left_alt_sep = ''
+      let g:airline#extensions#tabline#show_close_button = 0
 
       let g:airline#extensions#ctrlp#color_template = 'visual'
 
