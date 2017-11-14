@@ -1,0 +1,23 @@
+Setup for OS X configuration
+
+iTerm2:
+    https://www.iterm2.com/downloads.html
+
+
+Package Manager:
+    + Go download brew: https://brew.sh/
+
+Fonts:
+    + Droid Sans Mono Slashed
+        https://github.com/AlbertoDorado/droid-sans-mono-zeromod
+    + Droid Sans Mono Powerline
+        https://github.com/powerline/fonts/tree/master/DroidSansMonoSlashed
+
+Fish:
+    + Install Fish:
+        brew install fish --HEAD
+    + Make Fish the default shell
+        chsh -s /usr/local/bin/fish
+    + Link fish config
+        ln ~/dotfiles/osx/config.fish ~/.config/fish/config.fish
+
