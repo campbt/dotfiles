@@ -20,4 +20,14 @@ Fish:
         chsh -s /usr/local/bin/fish
     + Link fish config
         ln ~/dotfiles/osx/config.fish ~/.config/fish/config.fish
+    + Install fisher and run these fisher commands
+        fisher fzf
 
+ZSH: (Worse than FISH except for *much* better vim support)
+    + Install zsh
+        brew install zsh
+    + Make zsh the default shell
+        chsh -s /bin/zsh
+    + Link zsh config
+        ln ~/dotfiles/osx/zsh/.zshrc ~/.zshrc
+        ln ~/dotfiles/osx/zsh/.zsh ~/.zsh
