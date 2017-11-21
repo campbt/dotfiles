@@ -288,7 +288,8 @@ export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat 
 # Setting fd as the default source for fzf
 if [ -x "$(command -v ag)" ]; then
     # Use ag if we have it
-    export FZF_DEFAULT_COMMAND='ag -g f'
+    export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD || ag -g f) 2> /dev/null'
+    export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --exact" # Makes fzf use exact match on non space separated patterns. Prefix with ' to enable fuzzy finding
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
 
