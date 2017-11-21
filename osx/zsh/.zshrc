@@ -72,7 +72,8 @@ setopt sharehistory      #Share history across terminals
 setopt incappendhistory  #Immediately append to the history file, not just when a term is killed
 setopt hist_ignore_all_dups # Ignore duplicates in the history
 setopt hist_save_no_dups # Save no dupes to history
-setopt prompt_subst
+setopt prompt_subst # allow expansion in prompts
+
 
 # ----------------------
 #   Vi-Mode
@@ -274,6 +275,10 @@ source ~/.zsh/bashmarks.sh
 
 # OSX Specific
 source ~/.zsh/osx_functions.zsh
+
+# Colored man pages
+# git clone https://github.com/ael-code/zsh-colored-man-pages.git
+source ~/.zsh/zsh-colored-man-pages/colored-man-pages.plugin.zsh
 
 # ----------------------
 #   fzf
