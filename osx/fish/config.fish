@@ -28,6 +28,8 @@ set fish_color_operator yellow
 
 source ~/.config/fish/functions/osx_functions.fish
 source ~/.config/fish/functions/android_functions.fish
+source ~/.config/fish/functions/fzf_git.fish
+git_fzf_key_bindings
 
 # -----------------------
 #    Abbreviations
