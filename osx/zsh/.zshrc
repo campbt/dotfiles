@@ -1,5 +1,3 @@
-#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # ----------------------
 #   Exports
 # ----------------------
@@ -81,13 +79,14 @@ setopt prompt_subst
 # ----------------------
 
 bindkey -v # Vi mode
-export KEYTIMEOUT=1 # Remove lag in VI mode switching
+#export KEYTIMEOUT=1 # Remove lag in VI mode switching, but breaks multi-key binding. If using Ctrl-Enter binding, shouldn't be a problem to leave this off.
 
 bindkey '^R' history-incremental-search-backward
 
 bindkey -M viins '^ ' vi-cmd-mode # Ctrl-Space to leave insert mode
 bindkey -M viins '^n' forward-word
 bindkey -M viins '^p' backward-word
+bindkey -M viins "^?" backward-delete-char # Allows backspace over characters entered before the insert mode
 
 bindkey -M isearch '^k' history-incremental-search-backward
 bindkey -M isearch '^j' history-incremental-search-forward
@@ -191,9 +190,6 @@ function right_prompt() {
     fi
 }
 PROMPT=' $(prompt_vim_mode_indicator) $(prompt_pwd) $(prompt_git_indicator) '
-#PROMPT=' $(prompt_vim_mode_indicator) $(prompt_git_indicator) '
-#PROMPT=' %F{red}one %Btwo%b%f three '
-#RPROMPT='$(right_prompt)'
 
 # This will trigger the prompt to refresh when we change VI modes
 function zle-line-init zle-keymap-select {
@@ -273,3 +269,31 @@ bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND=bg=black
 
+# Bashmarks
+source ~/.zsh/bashmarks.sh
+
+# ----------------------
+#   fzf
+# ----------------------
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# This by default binds the following:
+# Ctrl-T | File search
+# Crtl R | History search
+# Alt C | cd to folder
+
+# Using highlight (http://www.andre-simon.de/doku/highlight/en/highlight.html)
+export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+
+# Setting fd as the default source for fzf
+if [ -x "$(command -v ag)" ]; then
+    # Use ag if we have it
+    export FZF_DEFAULT_COMMAND='ag -g f'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+fi
+
+# Sourcing these grants the ^g^[f b t r h] keybinds
+# and functions: fshow fbr fco gt chk fcs
+source ~/.zsh/fzf_git.zsh
+source ~/.zsh/fzf_git_functions.sh
+source ~/.zsh/fzf_git_keybindings.zsh
