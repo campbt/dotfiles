@@ -191,6 +191,7 @@ function right_prompt() {
     fi
 }
 PROMPT=' $(prompt_vim_mode_indicator) $(prompt_pwd) $(prompt_git_indicator) '
+RPROMPT=' $(right_prompt)'
 
 # This will trigger the prompt to refresh when we change VI modes
 function zle-line-init zle-keymap-select {
