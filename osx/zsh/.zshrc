@@ -272,6 +272,9 @@ HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND=bg=black
 # Bashmarks
 source ~/.zsh/bashmarks.sh
 
+# OSX Specific
+source ~/.zsh/osx_functions.zsh
+
 # ----------------------
 #   fzf
 # ----------------------
