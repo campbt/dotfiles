@@ -31,3 +31,9 @@ ZSH: (Worse than FISH except for *much* better vim support)
     + Link zsh config
         ln ~/dotfiles/osx/zsh/.zshrc ~/.zshrc
         ln ~/dotfiles/osx/zsh/.zsh ~/.zsh
+
+Tmux:
+    + Install tmux
+        brew install tmux
+    + Link config
+        ln ~/dotfiles/osx/tmux/.tmux.config ~/.tmux.config

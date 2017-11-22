@@ -36,6 +36,9 @@ alias gundo='git reset --soft HEAD^'
 #   Configuration
 # ----------------------
 
+# Fixes some issues with colors when in tmux
+if [[ $TERM == xterm ]]; then TERM=xterm-256color; fi
+
 # ls Colors
 export LS_COLORS='fi=0:di=34:ln=35:pi=5:so=5:bd=5:cd=5:ex=32:su=0:sg=0:tw=0:ow=0:'
 alias ls='gls -p --color=auto --group-directories-first'
@@ -307,3 +310,4 @@ fi
 source ~/.zsh/fzf_git.zsh
 source ~/.zsh/fzf_git_functions.sh
 source ~/.zsh/fzf_git_keybindings.zsh
+source ~/.zsh/fzf_tmux.zsh
