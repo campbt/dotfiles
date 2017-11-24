@@ -37,3 +37,9 @@ Tmux:
         brew install tmux
     + Link config
         ln ~/dotfiles/osx/tmux/.tmux.config ~/.tmux.config
+
+Vim:
+    + Install Vim 8.x
+    + Link config
+        ln ~/dotfiles/osx/vim/.vim ~/.vim
+        ln ~/dotfiles/osx/vim/.vimrc ~/.vimrc
