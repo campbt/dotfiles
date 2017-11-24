@@ -1,4 +1,17 @@
 # ----------------------
+#   Cheat Sheet
+# ----------------------
+# C-Space    | Exit to normal mode
+# C-n/p         | History substring search (j/k in normal mode)
+# C-w/b         | Forward/backward by word. Good for auto complete
+# C-f           | Accept the full auto completion
+# Aliases: g<?> | Variety of git commands
+#
+#
+#
+#
+#
+# ----------------------
 #   Exports
 # ----------------------
 
@@ -88,8 +101,8 @@ bindkey -v # Vi mode
 bindkey '^R' history-incremental-search-backward
 
 bindkey -M viins '^ ' vi-cmd-mode # Ctrl-Space to leave insert mode
-bindkey -M viins '^n' forward-word
-bindkey -M viins '^p' backward-word
+bindkey -M viins '^w' forward-word
+bindkey -M viins '^b' backward-word
 bindkey -M viins "^?" backward-delete-char # Allows backspace over characters entered before the insert mode
 
 bindkey -M isearch '^k' history-incremental-search-backward
@@ -104,6 +117,7 @@ bindkey -M menuselect '^n' expand-or-complete
 bindkey -M menuselect '^p' reverse-menu-complete
 bindkey -M menuselect '^[[Z' reverse-menu-complete #^[[Z is shift-tab
 
+# Note: Some additional bindings are set after plugins are loaded in the plugins section
 
 # ----------------------
 #   Key Bindings
@@ -268,10 +282,10 @@ source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 # Arrow keys
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
-bindkey -M viins '^k' history-substring-search-up
-bindkey -M viins '^j' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
+bindkey -M viins '^n' history-substring-search-down
+bindkey -M viins '^p' history-substring-search-up
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND=bg=black
 
 # Bashmarks
