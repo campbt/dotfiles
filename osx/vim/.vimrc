@@ -59,123 +59,115 @@
 
 " ---------
 
-" Bundles List {{
-  " Vundle Requirements {{
-    " This things are required for Vundle to Run
-    set nocompatible     " be iMproved
-    filetype off         " required!
+" vim-plug List {{
+   " Specify a directory for plugins
+    call plug#begin('~/.vim/plugged')
 
-    set rtp+=~/.vim/bundle/vundle/
-    call vundle#rc()
-
-    Bundle 'gmarik/vundle'
-  " }}
-
-  " Bundle List {{
     "List of Plugins used (Comment out to disable them)
 
+    " Nord
+    Plug 'arcticicestudio/nord-vim'
+
     "NerdTree - Directory Viewer
-    Bundle 'scrooloose/nerdtree'
-
-    ""NerdCommenter - Comment lines with <Leader>cc
-    Bundle 'scrooloose/nerdcommenter'
-
-    ""ZoomWin - Toggles hiding all but 1 window
-    Bundle 'ZoomWin'
-
-    ""Ctrl-P Fuzzy Finding Files
-    Bundle 'kien/ctrlp.vim'
-
-    "" SuperTab - Complete using Tab
-    "Bundle 'ervandew/supertab'
-
-    "" Smartusline - Color codes status line
-    "Bundle 'molok/vim-smartusline'
+    Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
     "" vim-airline - cool status line
-    Bundle 'vim-airline/vim-airline'
-    Bundle 'vim-airline/vim-airline-themes'
-
-    "" Yankring - Great yanking \p to open yankring
-    "Bundle 'vim-scripts/YankRing.vim'
-
-    "" Pasta - Much better pasting - all passive
-    Bundle 'sickill/vim-pasta'
-
-    "" Highlights hex Colors (useful for editing color files
-    Bundle 'hexHighlight.vim'
-
-    "" EasyMotion - Fast moving through file
-    Bundle 'Lokaltog/vim-easymotion'
-
-    "" upAndDown - Move lines up and down using shift arrow keys
-    Bundle 'upAndDown'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
 
     "" UltiSnippits - Best snippit plugin I've seen
-    "Errors out for some reason - github's issue so you have to manually installed
     if(has("py3") || has("python"))
-			Bundle 'SirVer/ultisnips'
+        Plug 'SirVer/ultisnips'
     endif
 
-    "Matching Pairs Autocompletition Support
-    "Bundle 'Raimondi/delimitMate'
+    "" EasyMotion - Fast moving through file
+    Plug 'Lokaltog/vim-easymotion'
 
-    " Autoclose - a simpler approach to autocompleting pairs
-    "Bundle 'Townk/vim-autoclose'
-    "Bundle 'Raimondi/delimitMate'
+    "" Yankring - Great yanking \p to open yankring
+    "Plug 'vim-scripts/YankRing.vim'
 
-    " Tabularize - better than Align (no stupid bindings)
-    Bundle 'godlygeek/tabular'
+    " Misc install needed for some (vim-session and vim-easytags)
+    Plug 'xolox/vim-misc'
 
-    " Surround - surround text
-    Bundle 'tpope/vim-surround'
+    " vim-session - use good session manager ( Misc needed for vim-session )
+    Plug 'xolox/vim-session'
 
-    " Clam - Better terminal command support
-    Bundle 'sjl/clam.vim'
+    " Vim Eunuch (Unix Commands in Vim, like :Rename)
+    Plug 'tpope/vim-eunuch'
+
+    " Vim-Abolish (substitute multiple variants of word)
+    Plug 'tpope/vim-abolish'
 
     " Fugitive - Git wrapper
-    Bundle 'tpope/vim-fugitive'
+    Plug 'tpope/vim-fugitive'
+
+    " Nice rest console for testing REST commands. Only used on its custom .rest filetype
+    Plug 'diepm/vim-rest-console', { 'for' : 'rest' }
+
+    " Tmux-Navigation integration (use C-hjkl to navigate between vim and tmux panes)
+    Plug 'christoomey/vim-tmux-navigator'
+
+    " --- Minor Tweaks / Improvement Plugins -----------------
+
+    "" upAndDown - Move lines up and down using shift arrow keys
+    Plug 'vim-scripts/upAndDown'
+
+    "" Highlights hex Colors (useful for editing color files
+    Plug 'vim-scripts/hexHighlight.vim'
+
+    "" Pasta - Much better pasting - all passive
+    Plug 'sickill/vim-pasta'
+
+    " Surround - surround text (cs'" = change surrounding ' to ")
+    Plug 'tpope/vim-surround'
+
+    " Improves words (allows i and a to work on more things and adds I and A. Ex: cI")
+    Plug 'wellle/targets.vim'
+
+    " Clam - Better terminal command support
+    Plug 'sjl/clam.vim', { 'on': 'Clam' }
+
+    " Shows changed lines since last git commit
+    Plug 'mhinz/vim-signify'
+
+    " --- Plugins to improve certain filetypes: -----------------
+
+    " Better JSON Support
+    Plug 'elzr/vim-json', { 'for': 'json' }
+
+    " Kotlin Syntax Files
+    Plug 'udalov/kotlin-vim', { 'for': 'kotlin' }
+
+    " Swift Syntax files
+    Plug 'keith/swift.vim', { 'for': 'swift' }
+    " Swift auto complete
+    "Bundle 'keith/sourcekittendaemon.vim'
+
+    " Initialize plugin system
+     call plug#end()
+
+    "-------------
+
+    " Tabularize - better than Align (no stupid bindings)
+    "Bundle 'godlygeek/tabular'
 
     "Indexed Search - shows 'at x of N when searching' [ BUG it took my keybindings for easymotion?? ]
     "Bundle 'IndexedSearch'
 
-    " Shows changed lines since last git commit
-    Bundle 'mhinz/vim-signify'
-
-    " Better JSON Support
-    Bundle 'elzr/vim-json'
-
     " Gotham Colorscheme
-    Bundle 'whatyouhide/vim-gotham'
+    "Bundle 'whatyouhide/vim-gotham'
 
     " Nord
-    Bundle 'arcticicestudio/nord-vim'
-
-    " Misc install needed for some (vim-session and vim-easytags)
-    Bundle 'xolox/vim-misc'
-
-    " vim-session - use good session manager ( Misc needed for vim-session )
-    Bundle 'xolox/vim-session'
-
-    " Improves words (allows i and a to work on more things and adds I and A. Ex: cI")
-    Bundle 'wellle/targets.vim'
+    "Bundle 'arcticicestudio/nord-vim'
 
     " Easy Tags
     "Bundle 'xolox/vim-easytags'
 
     " Dash (MAC ONLY)
-    Bundle 'rizzatti/dash.vim'
-
-    " Vim Eunuch (Unix Commands in Vim)
-    Bundle 'tpope/vim-eunuch'
-
-    " Vim-Abolish (substitute multiple variants of word)
-    Bundle 'tpope/vim-abolish'
-
-    Bundle 'diepm/vim-rest-console'
+    "Bundle 'rizzatti/dash.vim'
 
     " You Complete Me - Fuzzy finding auto completion
-    Bundle 'Valloric/YouCompleteMe'
+    "Bundle 'Valloric/YouCompleteMe'
     " You Complete Meet Extra Installation Notes {{
     "   Check the github link at:
     "   https://github.com/Valloric/YouCompleteMe
@@ -190,7 +182,7 @@
     " }}
 
     " TagBar - Shows all the methods, variables and stuff in file
-    Bundle 'majutsushi/tagbar'
+    "Bundle 'majutsushi/tagbar'
     " TagBar Extra Installation Notes {{
     " Note - To install this, you need Exuberant CTags
     " Install Homebrew http://mxcl.github.com/homebrew/
@@ -207,19 +199,15 @@
     "(Copied and slightly modified so not imported in Vundle)
 	"Bundle 'derekwyatt/vim-scala'
 
-    " Swift Syntax Files
-    Bundle 'keith/swift.vim'
-    " Swift auto complete
-    "Bundle 'keith/sourcekittendaemon.vim'
-
-    " Kotlin Syntax Files
-    Bundle 'udalov/kotlin-vim'
 
     " Fish Stuff
-    Bundle 'dag/vim-fish'
+    "Bundle 'dag/vim-fish'
 
-    " Tmux-Navigation integration (use C-hjkl to navigate between vim and tmux panes)
-    Bundle 'christoomey/vim-tmux-navigator'
+    ""ZoomWin - Toggles hiding all but 1 window
+    "Bundle 'ZoomWin'
+
+    ""Ctrl-P Fuzzy Finding Files
+    "Bundle 'kien/ctrlp.vim'
 
   " }}
 " }}
@@ -613,11 +601,11 @@
   " Airline Settings {{
       "set statusline=%f\ %r%{fugitive#statusline()}%m%h%=(%l/%L,\ %c)\ %3p%%\ %w\ %y\ [%{&encoding}:%{&fileformat}]\ \
       let g:airline_enable_hunks = 0 " Gets errors when this is enabled
-      let g:airline_theme = 'bubblegum'
+      let g:airline_theme = 'nord'
       let g:airline#extensions#whitespace#enabled = 0 " Who cares about whitespace?
       "let g:airline_section_b = '%<%{expand("%:h")}/' " The relative path to the file
       "let g:airline_section_c = '%<%t%m' " The file name (%t), if it has been modified (%m)
-      let g:airline_section_x = '%{airline#extensions#tagbar#currenttag()}' " Shows the method the cursor is in
+      "let g:airline_section_x = '%{airline#extensions#tagbar#currenttag()}' " Shows the method the cursor is in
       "let g:airline_section_x = '' " Shows the method the cursor is in
       "let g:airline_section_y = '%{airline#util#wrap(airline#extensions#branch#get_head(),0)}' " Shows the current branch
       let g:airline_section_y = '%{airline#util#wrap(airline#parts#filetype(),0)}' " Shows the file type

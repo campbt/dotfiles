@@ -7,6 +7,7 @@
 **/.vim/plugin/
 **/.vim/sessions/
 **/.vim/eclim/
+**/.vim/plugged/
 
 **/vim/tmp/undo/*
 **/vim/tmp/swap/*
@@ -15,3 +16,4 @@
 **/vim/plugin/
 **/vim/sessions/
 **/vim/eclim/
+**/vim/plugged/
