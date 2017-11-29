@@ -18,8 +18,6 @@
   " <C-P>        : Insert Directory of current file into command
   " \o           : Brings up Searching for files in current directory
   " \\l          : FuzzyFind Lines in file
-  " gz           : ZoomWin, when in split windows, zooms into the current one, \\ zooms out again
-  " \cd          : Changes directory to the current files
   " \mw          : Mark Window for Swapping
   " \ms          : Swap Current Window with one marked
   " \p           : Open up Yank Ring
@@ -27,8 +25,8 @@
   " \\_          : EasyMove - j,k lines, w/b, words, e end of words, /,? for search
   "   \j, \k, \w : are same as \\j \\k \\w
   " s            : EasyMove search
-   "<D-/> or \/  : Comment out a line
-  " \c           : NerdComment (add letter after c for option)
+  " \c           : Comment out a line
+  " gc<motion>   : Comment motion
   " S-Up/Down    : Move Line Up (Down to move it down)
   " ultisnips    :
   " Tabularize   : Aligns text based on a regex
@@ -51,6 +49,7 @@
   " gp           : Visually Select recently pasted text
   " \K           : Grep the word the cursor is on
   " :Ag <>       : Silver search and throw results into quickfix
+  " :Agf! <>      : Silver search with fzf
   " :Subvert/..  : Replace multiple variants (like one/One/ONE). Ex: :Subvert/first/second/g  :Subvert/child{,ren}/adult{,s}
   " :Remove      : Delete file and buffer
   " :Move        : Move file and buffer
@@ -83,6 +82,10 @@
     "" EasyMotion - Fast moving through file
     Plug 'Lokaltog/vim-easymotion'
 
+    "" fzf | File searching / opening
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " This will install fzf if it's not there
+    Plug 'junegunn/fzf.vim'
+
     "" Yankring - Great yanking \p to open yankring
     "Plug 'vim-scripts/YankRing.vim'
 
@@ -100,6 +103,9 @@
 
     " Fugitive - Git wrapper
     Plug 'tpope/vim-fugitive'
+
+    " Commentary - Simple commenter
+    Plug 'tpope/vim-commentary'
 
     " Nice rest console for testing REST commands. Only used on its custom .rest filetype
     Plug 'diepm/vim-rest-console', { 'for' : 'rest' }
@@ -202,9 +208,6 @@
 
     " Fish Stuff
     "Bundle 'dag/vim-fish'
-
-    ""ZoomWin - Toggles hiding all but 1 window
-    "Bundle 'ZoomWin'
 
     ""Ctrl-P Fuzzy Finding Files
     "Bundle 'kien/ctrlp.vim'
@@ -408,9 +411,6 @@
     vnoremap > >gv
     vnoremap < <gv
 
-    " Change working directory to current file's location
-    nmap <silent> <Leader>cd :cd %:p:h<CR>
-
     " Make horizontal scrolling easier (zh is left, zl is right)
     nmap <silent> <C-y> 10zh
     nmap <silent> <C-p> 10zl
@@ -427,7 +427,6 @@
     " Opens an edit command with the path of the currently edited file filled in
     " Normal mode: <Leader>e
     map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-    map <Leader>[ :CtrlP <C-R>=expand("%:p:h") . "/" <CR>
 
     " Opens a tab edit command with the path of the currently edited file filled in
     " Normal mode: <Leader>t
@@ -493,15 +492,15 @@
   "Most custom mappings here should involve <Leader> key
 
   " eclim settings {{
-      autocmd Filetype java imap <C-w> <C-x><C-u><C-p>
-      autocmd Filetype java map <C-n> :JavaSearch -a edit<CR>
-      "autocmd Filetype java let g:SuperTabRetainCompletionDuration='completion'
-      let g:EclimCompletionMethod = 'omnifunc'
+      "autocmd Filetype java imap <C-w> <C-x><C-u><C-p>
+      "autocmd Filetype java map <C-n> :JavaSearch -a edit<CR>
+      ""autocmd Filetype java let g:SuperTabRetainCompletionDuration='completion'
+      "let g:EclimCompletionMethod = 'omnifunc'
 
-      " Lets eclim play work with YouCompelteMe
-      autocmd Filetype * runtime! autoload/eclim/<amatch>/complete.vim
-          \ | let s:cfunc = 'eclim#'.expand('<amatch>').'#complete#CodeComplete'
-          \ | if exists('*'.s:cfunc) | let &l:omnifunc=s:cfunc | endif
+      "" Lets eclim play work with YouCompleteMe
+      "autocmd Filetype * runtime! autoload/eclim/<amatch>/complete.vim
+      "    \ | let s:cfunc = 'eclim#'.expand('<amatch>').'#complete#CodeComplete'
+      "    \ | if exists('*'.s:cfunc) | let &l:omnifunc=s:cfunc | endif
   " }}
 
   " NERDTree Settings {{
@@ -510,78 +509,45 @@
     map <Leader>N :NERDTreeFind<CR>
   " }}
 
-   "NERDComment Settings {{
-      nnoremap <Leader>/ :call NERDComment(0,"toggle")<CR>
-      vnoremap <Leader>/ :call NERDComment(0,"toggle")<CR>gv
-      nnoremap <Leader>c<Space> :call NERDComment(0,"toggle")<CR>
-      vnoremap <Leader>c<Space> :call NERDComment(0,"toggle")<CR>gv
-   "}}
+  " FZF Settings {{
+      " Quick function to use :GFiles if in a git repo, otherwise Files
+      function! GFilesFallback()
+          let output = system('git rev-parse --show-toplevel')
+          let prefix = get(g:, 'fzf_command_prefix', '')
+          if v:shell_error == 0
+              exec "normal :" . prefix . "GFiles\<CR>"
+          else
+              exec "normal :" . prefix . "Files\<CR>"
+          endif
+          return 0
+      endfunction
 
-  " delimitMate Settings {{
-    "Expands braces when enter is hit
-    let delimitMate_expand_cr = 1
-    "Pads a space when a space is pressed
-    let delimitMate_expand_space = 1
+      " Expands the current word and enters that as the initial search term
+      command! -complete=dir FilesSearchWord call fzf#vim#files('', fzf#vim#with_preview({'options': ['--query', expand('<cword>')]}), 0)
 
-		" It adds some binding to <Esc>OC for some reason so I'm removing that
-		silent! iunmap <C-[>OC
+      nnoremap <Leader>o :call GFilesFallback()<CR>
+      nnoremap <Leader>O :Buffers<CR>
+      nnoremap <Leader><Leader>o :History<CR>
+      nnoremap <Leader><Leader>O :FilesSearchWord<CR>
+      nnoremap <Leader><Leader>l :BLines<CR>
 
-    " I don't like it matching quotes (messes up a lot)
-    let delimitMate_quotes = ""
+      " Silver Search (Ag) with fzf and preview
+      command! -bang -nargs=* Agf
+          \ call fzf#vim#ag(<q-args>,
+          \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+          \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+          \                 <bang>0)
 
-    " SuperTab has issues with the CR so I remapped it to shift and ctrl
-    " This is only useful for expanding braces
-		silent! imap <unique> <buffer> <C-CR> <Plug>delimitMateCR
-		silent! imap <unique> <buffer> <S-CR> <Plug>delimitMateCR
-  " }}
-
-   "ZoomWin Settings {{
-    map gz :ZoomWin<CR>
-  " }}
-
-  " Ctrl-P Settings {{
-     "Change mapping to \o (open)
-     let g:ctrlp_map = '<Leader>o'
-     let g:ctrlp_max_height = 15
-     let g:ctrlp_highlight_match = [1, 'Type']
-     let g:ctrlp_switch_buffer = 'tHV'
-     let g:ctrlp_open_new_file = 'r'
-
-     " Function to paste the current word into the CtrlP window
-     function! LazyP()
-         let g:ctrlp_default_input = expand('<cword>')
-         CtrlP
-         let g:ctrlp_default_input = ''
-     endfunction
-     command! LazyP call LazyP()
-
-     noremap <Leader>O :CtrlPBuffer<CR>
-     noremap <Leader><Leader>o :CtrlPMRUFiles<CR>
-     noremap <Leader><Leader>O :LazyP<CR>
-     noremap <Leader><Leader>l :CtrlPLine<CR>
-
-     "Don't allow searching for hidden files/folders
-     let g:ctrlp_dotfiles = 0
-
-     " Have CtrlP use Ag if installed
-     if executable('ag')
-         let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-         let g:ctrlp_use_caching = 0 " So fast it doesn't need to cache?
-     else
-         let g:ctrlp_user_command = 'find %s -not -path "*/\.*" -type f -exec grep -Iq . {} \; -and -print'
-     endif
-
-     " If in a git directory, just use git ls-files
-     "let g:ctrlp_custom_ignore = {
-         "\ 'types': {
-         "\ 1: ['.git', 'cd %s && git ls-files --cached --exclude-standard --others'],
-         "\ 2: ['.hg', 'hg --cwd %s locate -I .'],
-         "\ },
-         "\ 'fallback': 'find %s -type f'
-         "\ }
-     "let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+      " Files command with preview window
+      command! -bang -nargs=? -complete=dir Files
+          \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
   " }}
+
+  " Vim-Commentary Settings {{
+     nnoremap <Leader>c :Commentary<CR>
+     vnoremap <Leader>c :Commentary<CR>
+  "}}
 
   " UltiSnippits Settings {{
     " Also looks in snippits folder in default .vim folder
@@ -589,13 +555,6 @@
     let g:UltiSnipsExpandTrigger="<c-j>"
     let g:UltiSnipsJumpForwardTrigger="<c-j>"
     let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-  " }}
-
-  " SmartusLine Settings {{
-    "let g:smartusline_string_to_highlight = '%f '
-		"let g:smartusline_hi_replace = 'guibg=#e454ba guifg=black ctermbg=magenta ctermfg=black'
-		"let g:smartusline_hi_insert  = 'guibg=orange guifg=black  ctermbg=208 ctermfg=black'
-		"let g:smartusline_hi_normal  = 'guibg=#95e454 guifg=black ctermbg=113 ctermfg=black'
   " }}
 
   " Airline Settings {{
@@ -666,27 +625,6 @@
 
     let g:EasyMotion_smartcase = 1
     let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
-  " }}
-
-  " Autoclose Settings {{
-
-  " Global AutoClose Pairs (don't use <>)
-    "autocmd FileType *
-              "\ let b:AutoClosePairs = AutoClose#DefaultPairsModified("","<")
-
-    " Filetype specific pairs:
-    "autocmd FileType ruby
-              "\ let b:AutoClosePairs = AutoClose#DefaultPairsModified("|", "<")
-    "autocmd FileType html
-              "\ let b:AutoClosePairs = AutoClose#DefaultPairsModified("% #", "")
-
-
-
-  " }}
-  "
-  " delimitMate Settings {{
-      let delimitMate_smart_quotes = 1
-        let b:delimitMate_matchpairs = "(:),[:],{:},<:>,\":\",':'"
   " }}
 
   " TagBar Settings {{
