@@ -64,15 +64,15 @@
 
     "List of Plugins used (Comment out to disable them)
 
-    " Nord
-    Plug 'arcticicestudio/nord-vim'
+    " Nord (Custom theme tyler-nord is used for colorscheme and airline theme)
+    " Plug 'arcticicestudio/nord-vim'
 
     "NerdTree - Directory Viewer
     Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
     "" vim-airline - cool status line
     Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
+    " Plug 'vim-airline/vim-airline-themes'
 
     "" UltiSnippits - Best snippit plugin I've seen
     if(has("py3") || has("python"))
@@ -223,13 +223,7 @@
 " Vim Settings {{
 
     " Default color scheme (Custom Created One)
-      " NOTE : This colorscheme will support 256 Color terminals for OS X
-      " Not sure how it looks in other OS's yet
-    "color tyler_dim
-    "colorscheme smyck
-    "colorscheme atom-dark
-    "colorscheme tyler-atom
-    colorscheme nord
+    colorscheme tyler-nord
 
     " Run gvimrc commands First
     if has("gui_macvim")
@@ -312,8 +306,9 @@
     set wildmenu
 
     "Highlight cursor line (of current buffer only)
-    autocmd BufEnter * setlocal cursorline
-    autocmd BufLeave * setlocal nocursorline
+    " NOTE: Potentially HUGE performance hit for this for some filetypes. Disabled for now
+    " autocmd BufEnter * setlocal cursorline
+    " autocmd BufLeave * setlocal nocursorline
 
     " Trim whitespace on save (has problems moving cursor around)
     autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
@@ -557,20 +552,30 @@
   " UltiSnippits Settings {{
     " Also looks in snippits folder in default .vim folder
     let g:UltiSnipsSnippetDirectories=["UltiSnips", "snippits"]
-    let g:UltiSnipsExpandTrigger="<c-j>"
-    let g:UltiSnipsJumpForwardTrigger="<c-j>"
-    let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+    let g:UltiSnipsExpandTrigger="<c-s-j>"
+    let g:UltiSnipsJumpForwardTrigger="<c-s-j>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-s-k>"
   " }}
 
   " Airline Settings {{
       "set statusline=%f\ %r%{fugitive#statusline()}%m%h%=(%l/%L,\ %c)\ %3p%%\ %w\ %y\ [%{&encoding}:%{&fileformat}]\ \
       let g:airline_enable_hunks = 0 " Gets errors when this is enabled
-      let g:airline_theme = 'nord'
-      let g:airline#extensions#whitespace#enabled = 0 " Who cares about whitespace?
+      source ~/.vim/autoload/airline/themes/tylernord.vim
+      let g:airline_theme = 'tylernord'
+      let g:airline#extensions#whtespace#enabled = 0 " Who cares about whitespace?
+      "let g:airline_section_b = ''
+      " let g:airline#extensions#branch#format = 'CustomBranchName'
+      " function! CustomBranchName(name)
+      "     return ''
+      " endfunction
+      let g:airline#extensions#hunks#enabled = 0 " Disables +0 ~0 -0 Stuff next to branch name
+      let g:airline#extensions#branch#format = 2 " Shortens branch/full/names to /b/f/names
+      let g:airline#extensions#branch#displayed_head_limit = 14 " Limit the max size of the branch section
+      let g:airline_section_c = '%<%t%m'
       "let g:airline_section_b = '%<%{expand("%:h")}/' " The relative path to the file
       "let g:airline_section_c = '%<%t%m' " The file name (%t), if it has been modified (%m)
       "let g:airline_section_x = '%{airline#extensions#tagbar#currenttag()}' " Shows the method the cursor is in
-      "let g:airline_section_x = '' " Shows the method the cursor is in
+      let g:airline_section_x = ''
       "let g:airline_section_y = '%{airline#util#wrap(airline#extensions#branch#get_head(),0)}' " Shows the current branch
       let g:airline_section_y = '%{airline#util#wrap(airline#parts#filetype(),0)}' " Shows the file type
       let g:airline_section_z = '%l/%L : %c' " Shows the line number and column number of cursor
@@ -589,18 +594,8 @@
 
       " Enable this if the terminal is using a patched font
       set encoding=utf-8
-      set fillchars+=stl:\ ,stlnc:\
+      " set fillchars+=stl:\ ,stlnc:\ " Fixes ^^^^^^^^^^^ on some terminals
       let g:airline_powerline_fonts = 1
-
-      " Modifies the colorscheme a bit
-      let g:airline_theme_patch_func = 'AirlineThemePatch'
-      function! AirlineThemePatch(palette)
-        if g:airline_theme == 'bubblegum'
-          for colors in values(a:palette.inactive)
-            let colors[2] = 243 " Makes the text a lighter gray on inactive colors
-          endfor
-        endif
-      endfunction
   " }}
 
   " Yankring Settings {{
@@ -680,7 +675,7 @@
   " }}
 
   " vim-signify Settings {{
-    let g:signify_sign_overwrite = 0 " May not play nice with eclim
+    let g:signify_vcs_list = [ 'git' ]
     let g:signify_sign_delete_first_line = '-' " Default character doesnt work on ubuntu??
     nmap <leader>gh :SignifyToggleHighlight<cr>
   " }}
