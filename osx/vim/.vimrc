@@ -86,6 +86,9 @@
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " This will install fzf if it's not there
     Plug 'junegunn/fzf.vim'
 
+    " Async completions
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+
     "" Yankring - Great yanking \p to open yankring
     "Plug 'vim-scripts/YankRing.vim'
 
@@ -524,12 +527,14 @@
 
       " Expands the current word and enters that as the initial search term
       command! -complete=dir FilesSearchWord call fzf#vim#files('', fzf#vim#with_preview({'options': ['--query', expand('<cword>')]}), 0)
+      command! -complete=dir LinesSearchWord call fzf#vim#buffer_lines({'options': ['--query', expand('<cword>')]}, 0)
 
       nnoremap <Leader>o :call GFilesFallback()<CR>
       nnoremap <Leader>O :Buffers<CR>
       nnoremap <Leader><Leader>o :History<CR>
       nnoremap <Leader><Leader>O :FilesSearchWord<CR>
       nnoremap <Leader><Leader>l :BLines<CR>
+      nnoremap <Leader><Leader>L :LinesSearchWord<CR>
 
       " Silver Search (Ag) with fzf and preview
       command! -bang -nargs=* Agf
@@ -679,6 +684,11 @@
     let g:signify_sign_delete_first_line = '-' " Default character doesnt work on ubuntu??
     nmap <leader>gh :SignifyToggleHighlight<cr>
   " }}
+
+  " YouCompleteMe Settings {{
+      let g:ycm_key_invoke_completion = '<C-F>'
+  "}}
+
 
   " sourcekitten Settings (swift autocomplete) {{
       autocmd Filetype swift imap <C-w> <C-x><C-o>
