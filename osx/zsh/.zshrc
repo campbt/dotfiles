@@ -314,9 +314,10 @@ export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat 
 # Setting fd as the default source for fzf
 if [ -x "$(command -v ag)" ]; then
     # Use ag if we have it
-    export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD || ag -g f) 2> /dev/null'
+    # export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD || ag -g f) 2> /dev/null'
     export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --exact" # Makes fzf use exact match on non space separated patterns. Prefix with ' to enable fuzzy finding
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind ctrl-d:preview-page-down,ctrl-u:preview-page-up" # Custom bindings to scroll the preview window
+    export FZF_CTRL_T_COMMAND='(git ls-tree -r --name-only HEAD || ag -g f) 2> /dev/null'
 fi
 
 # Sourcing these grants the ^g^[f b t r h] keybinds
@@ -325,3 +326,11 @@ source ~/.zsh/fzf_git.zsh
 source ~/.zsh/fzf_git_functions.sh
 source ~/.zsh/fzf_git_keybindings.zsh
 source ~/.zsh/fzf_tmux.zsh
+
+
+# ----------------------
+#   Local Configuration
+# ----------------------
+
+# Source the local configuration file, if one present
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
