@@ -88,6 +88,19 @@
 
     " Async completions
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+    " You Complete Me Extra Installation Notes {{
+    "   Check the github link at:
+    "   https://github.com/Valloric/YouCompleteMe
+    "
+    "   Vim-Plug will attempt to install.py it automatically. If that fails,
+    "   try: cd ~/.vim/bundle/YouCompleteMe
+    "        git submodule update --init --recursive
+    "        ./install.sh
+    "
+    "    (If it doesn't work you'll need to install CMake and stuff. Read the readme)
+    "
+    "   This plugin requires some extra compiled sources to work properly
+    " }}
 
     "" Yankring - Great yanking \p to open yankring
     "Plug 'vim-scripts/YankRing.vim'
@@ -141,16 +154,9 @@
 
     " --- Plugins to improve certain filetypes: -----------------
 
-    " Better JSON Support
-    Plug 'elzr/vim-json', { 'for': 'json' }
-
-    " Kotlin Syntax Files
-    Plug 'udalov/kotlin-vim', { 'for': 'kotlin' }
-
-    " Swift Syntax files
-    Plug 'keith/swift.vim', { 'for': 'swift' }
-    " Swift auto complete
-    "Bundle 'keith/sourcekittendaemon.vim'
+    " A collection of language packs for 100+, loaded on demand
+    " https://vimawesome.com/plugin/vim-polyglot
+    Plug 'sheerun/vim-polyglot'
 
     " Initialize plugin system
      call plug#end()
@@ -166,9 +172,6 @@
     " Gotham Colorscheme
     "Bundle 'whatyouhide/vim-gotham'
 
-    " Nord
-    "Bundle 'arcticicestudio/nord-vim'
-
     " Easy Tags
     "Bundle 'xolox/vim-easytags'
 
@@ -177,18 +180,6 @@
 
     " You Complete Me - Fuzzy finding auto completion
     "Bundle 'Valloric/YouCompleteMe'
-    " You Complete Meet Extra Installation Notes {{
-    "   Check the github link at:
-    "   https://github.com/Valloric/YouCompleteMe
-    "
-    "   try: cd ~/.vim/bundle/YouCompleteMe
-    "   git submodule update --init --recursive
-    "    ./install.sh
-    "
-    "    (If it doesn't work you'll need to install CMake and stuff. Read the readme)
-    "
-    "   This plugin requires some extra compiled sources to work properly
-    " }}
 
     " TagBar - Shows all the methods, variables and stuff in file
     "Bundle 'majutsushi/tagbar'
@@ -203,17 +194,6 @@
     " Indent Guides - Adds indent lines which look good
     " Maybe Add Sometime later for Python
     "Bundle 'nathanaelkane/vim-indent-guides'
-
-    "Scala Syntax Files
-    "(Copied and slightly modified so not imported in Vundle)
-	"Bundle 'derekwyatt/vim-scala'
-
-
-    " Fish Stuff
-    "Bundle 'dag/vim-fish'
-
-    ""Ctrl-P Fuzzy Finding Files
-    "Bundle 'kien/ctrlp.vim'
 
   " }}
 " }}
@@ -332,7 +312,7 @@
     au FileType json set textwidth=0
 
     " git commit messages
-    au FileType gitcommit call setpos('.', [0, 1, 1, 0]) " Start at line 0
+    au FileType gitcommit setlocal spell textwidth=80 call setpos('.', [0, 1, 1, 0]) " Start at line 0
 " }}
 
 " ----------
@@ -676,7 +656,12 @@
 
   " vim-signify Settings {{
     let g:signify_vcs_list = [ 'git' ]
-    let g:signify_sign_delete_first_line = '-' " Default character doesnt work on ubuntu??
+    " Set all signify characters to just a dot. Use colors to differeniate
+    let g:signify_sign_delete_first_line = '•'
+    let g:signify_sign_add               = '•'
+    let g:signify_sign_delete            = '•'
+    let g:signify_sign_delete_first_line = '•'
+    let g:signify_sign_change            = '•'
     nmap <leader>gh :SignifyToggleHighlight<cr>
   " }}
 
