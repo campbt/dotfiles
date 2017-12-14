@@ -54,6 +54,7 @@
   " :Remove      : Delete file and buffer
   " :Move        : Move file and buffer
   " <C-S-P>      : Displays the highlight tags for the word
+  " gh gl        : Navigate backward (gh) or forward (gl) by file
 " }}
 
 " ---------
@@ -151,6 +152,9 @@
 
     " Shows changed lines since last git commit
     Plug 'mhinz/vim-signify'
+
+    " HistoryTraverse - Allows file-wise history traversal
+    Plug 'ckarnell/history-traverse'
 
     " --- Plugins to improve certain filetypes: -----------------
 
@@ -312,7 +316,7 @@
     au FileType json set textwidth=0
 
     " git commit messages
-    au FileType gitcommit setlocal spell textwidth=80 call setpos('.', [0, 1, 1, 0]) " Start at line 0
+    au FileType gitcommit setlocal spell textwidth=80 | call setpos('.', [0, 1, 1, 0]) " Start at line 0
 " }}
 
 " ----------
@@ -558,7 +562,8 @@
       let g:airline_section_x = ''
       "let g:airline_section_y = '%{airline#util#wrap(airline#extensions#branch#get_head(),0)}' " Shows the current branch
       let g:airline_section_y = '%{airline#util#wrap(airline#parts#filetype(),0)}' " Shows the file type
-      let g:airline_section_z = '%l/%L : %c' " Shows the line number and column number of cursor
+      " let g:airline_section_z = '%l/%L : %c' " Shows the line number and column number of cursor
+      let g:airline_section_z = '%l/%L  %{HistoryIndicator()}' " Shows the line number and the history indicator (HistoryTraverse plugin)
       let g:airline#extensions#tabline#enabled = 0
       let g:airline#extensions#tabline#show_splits = 0
       let g:airline#extensions#tabline#buffer_min_count = 2
@@ -669,6 +674,15 @@
       let g:ycm_key_invoke_completion = '<C-F>'
   "}}
 
+  " HistoryTraverse Settings {{
+    nnoremap gh :HisTravBack<CR>
+    nnoremap gl :HisTravForward<CR>
+    " let g:history_indicator_back_active      = '⬅' " Default: '⬅'
+    " let g:history_indicator_back_inactive    = '' " Default: '⇦'
+    " let g:history_indicator_forward_active   = '➡' " Default: '➡'
+    " let g:history_indicator_forward_inactive = '' " Default: '⇨'
+    let g:history_indicator_separator        = ' '
+  "}}
 
   " sourcekitten Settings (swift autocomplete) {{
       autocmd Filetype swift imap <C-w> <C-x><C-o>
@@ -690,21 +704,18 @@
 
   " Move Tab - moves the tab in the given direction
     function! TabMove(direction)
-        " get number of tab pages.
-        let ntp=tabpagenr("$")
-        " move tab, if necessary.
-        if ntp > 1
-            " get number of current tab page.
-            let ctpn=tabpagenr()
-            " move left.
-            if a:direction < 0
-                let index=((ctpn-1+ntp-1)%ntp)
-            else
-                let index=(ctpn%ntp)
-            endif
+        let s:current_tab=tabpagenr()
+        let s:total_tabs = tabpagenr("$")
 
-            " move tab page.
-            execute "tabmove ".index
+        if s:current_tab == 1 && a:direction == -1
+            " Wrap to end
+            tabmove
+        elseif s:current_tab == s:total_tabs && a:direction == 1
+            " Wrap to start
+            tabmove 0
+        else
+            " Normal move
+            execute (a:direction > 0 ? "+" : "-") . "tabmove"
         endif
     endfunction
 
