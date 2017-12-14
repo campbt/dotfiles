@@ -36,7 +36,7 @@ function "${FZF_PREFIX}gt" () {
     --preview 'git show --color=always {} | head -'$LINES
 }
 
-function "${FZF_PREFIX}gh" () {
+function "${FZF_PREFIX}gv" () {
   is_in_git_repo || return
   git log --all --date=short --format="%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%ad %s" --graph --color=always |
   fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \

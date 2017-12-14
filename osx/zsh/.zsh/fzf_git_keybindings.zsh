@@ -13,5 +13,5 @@ bind-git-helper() {
     eval "bindkey -M viins '^g^$c' fzf-g$c-widget"
   done
 }
-bind-git-helper f b t r h
+bind-git-helper v f b t r
 unset -f bind-git-helper
