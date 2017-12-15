@@ -309,6 +309,9 @@
     " Reload when entering buffer or gaining focus
     au FocusGained,BufEnter * :silent! !
 
+    " Change cwd to this file's directory, or to the git root
+    au BufRead * call SetProjectRoot()
+
     " ================
     " File Type Specific Settings
 
@@ -546,7 +549,8 @@
       let g:airline_enable_hunks = 0 " Gets errors when this is enabled
       source ~/.vim/autoload/airline/themes/tylernord.vim
       let g:airline_theme = 'tylernord'
-      let g:airline#extensions#whtespace#enabled = 0 " Who cares about whitespace?
+      let g:airline#extensions#whtespace#enabled = 0 " Disables airline's file whitespace warnings
+      silent! call airline#extensions#whitespace#disable()
       "let g:airline_section_b = ''
       " let g:airline#extensions#branch#format = 'CustomBranchName'
       " function! CustomBranchName(name)
@@ -779,4 +783,19 @@
     endif
     echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
   endfunc
+
+  " set working directory to git project root
+  " or directory of current file if not git project
+  function! SetProjectRoot()
+    " default to the current file's directory
+    lcd %:p:h
+    let git_dir = system("git rev-parse --show-toplevel")
+    " See if the command output starts with 'fatal' (if it does, not in a git repo)
+    let is_not_git_dir = matchstr(git_dir, '^fatal:.*')
+    " if git project, change local directory to git project root
+    if empty(is_not_git_dir)
+      lcd `=git_dir`
+    endif
+  endfunction
+
 " }}
