@@ -30,7 +30,7 @@ ZSH: (Worse than FISH except for *much* better vim support)
         chsh -s /bin/zsh
     + Link zsh config
         ln ~/dotfiles/osx/zsh/.zshrc ~/.zshrc
-        ln ~/dotfiles/osx/zsh/.zsh ~/.zsh
+        ln -s ~/dotfiles/osx/zsh/.zsh ~/.zsh
 
 Tmux:
     + Install tmux
@@ -49,5 +49,12 @@ Vim:
     + Install Vim 8.x
         brew install vim --with-override-system-vi
     + Link config
-        ln ~/dotfiles/osx/vim/.vim ~/.vim
+        ln -s ~/dotfiles/osx/vim/.vim ~/.vim
         ln ~/dotfiles/osx/vim/.vimrc ~/.vimrc
+    + Make backup dirs
+        mkdir ~/.vim/tmp
+        mkdir ~/.vim/tmp/swap
+        mkdir ~/.vim/tmp/undo
+        mkdir ~/.vim/tmp/backup
+    + Run :PlugInstall
+        (First run will be buggy before this is done)
