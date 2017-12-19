@@ -130,6 +130,9 @@
     " Tmux-Navigation integration (use C-hjkl to navigate between vim and tmux panes)
     Plug 'christoomey/vim-tmux-navigator'
 
+    " Tabularize - better than Align (no stupid bindings)
+    Plug 'godlygeek/tabular', { 'on' : 'Tabularize' }
+
     " --- Minor Tweaks / Improvement Plugins -----------------
 
     "" upAndDown - Move lines up and down using shift arrow keys
@@ -170,24 +173,6 @@
      call plug#end()
 
     "-------------
-
-    " Tabularize - better than Align (no stupid bindings)
-    "Bundle 'godlygeek/tabular'
-
-    "Indexed Search - shows 'at x of N when searching' [ BUG it took my keybindings for easymotion?? ]
-    "Bundle 'IndexedSearch'
-
-    " Gotham Colorscheme
-    "Bundle 'whatyouhide/vim-gotham'
-
-    " Easy Tags
-    "Bundle 'xolox/vim-easytags'
-
-    " Dash (MAC ONLY)
-    "Bundle 'rizzatti/dash.vim'
-
-    " You Complete Me - Fuzzy finding auto completion
-    "Bundle 'Valloric/YouCompleteMe'
 
     " TagBar - Shows all the methods, variables and stuff in file
     "Bundle 'majutsushi/tagbar'
