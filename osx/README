@@ -13,6 +13,12 @@ Fonts:
     + Droid Sans Mono Powerline
         https://github.com/powerline/fonts/tree/master/DroidSansMonoSlashed
 
+Bash:
+    + Link config
+        ln ~/dotfiles/osx/bash/.bashrc ~/.bashrc
+    + Install helpful completion
+        brew install bash-completion
+
 Fish:
     + Install Fish:
         brew install fish --HEAD
@@ -58,3 +64,12 @@ Vim:
         mkdir ~/.vim/tmp/backup
     + Run :PlugInstall
         (First run will be buggy before this is done)
+
+Brew Packages:
+    + Run these brew packages if you still want them
+        brew install git
+        brew install fzf
+        brew install the_silver_searcher
+        brew install tree
+        brew install macvim
+        brew install tldr
