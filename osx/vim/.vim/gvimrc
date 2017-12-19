@@ -6,7 +6,7 @@ if has("gui_macvim")
   set fuoptions=maxhorz,maxvert
 
 	" Make macvim a little transparent
-  set transparency=0
+  set transparency=1
 
   " Command-/ to toggle comments
   map <D-/> <plug>NERDCommenterToggle<CR>
@@ -62,6 +62,11 @@ set visualbell
 
 " Start without the toolbar
 set guioptions-=T
+
+" Font (powerline necessary for airline)
+set guifont=Droid\ Sans\ Mono\ for\ Powerline:h12
+
+set linespace=2
 
 " Project Tree
 "autocmd VimEnter * call s:CdIfDirectory(expand("<amatch>"))

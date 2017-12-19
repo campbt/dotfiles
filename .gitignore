@@ -8,6 +8,7 @@
 **/.vim/sessions/
 **/.vim/eclim/
 **/.vim/plugged/
+**/.netrwhist
 
 **/vim/tmp/undo/*
 **/vim/tmp/swap/*

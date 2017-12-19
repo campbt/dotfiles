@@ -34,6 +34,8 @@ let s:nord13_gui = "#EBCB8B"
 let s:nord14_gui = "#A3BE8C"
 let s:nord15_gui = "#B48EAD"
 
+let s:nord_gui_background = "#1d2128"
+
 let s:nord1_term = "0"
 let s:nord3_term = "8"
 let s:nord5_term = "7"
@@ -128,10 +130,10 @@ call s:hi("Cursor", s:nord0_gui, s:nord4_gui, "", "NONE", "", "")
 call s:hi("CursorLine", "", s:nord1_gui, "NONE", s:nord1_term, "NONE", "")
 call s:hi("Error", s:nord0_gui, s:nord11_gui, "", s:nord11_term, "", "")
 call s:hi("iCursor", s:nord0_gui, s:nord4_gui, "", "NONE", "", "")
-call s:hi("LineNr", s:nord3_gui, s:nord0_gui, s:nord3_term, "NONE", "", "")
+call s:hi("LineNr", s:nord3_gui, "NONE", s:nord3_term, "NONE", "", "")
 call s:hi("MatchParen", s:nord0_gui, s:nord8_gui, s:nord1_term, s:nord8_term, "", "")
 call s:hi("NonText", s:nord2_gui, "", s:nord3_term, "", "", "")
-call s:hi("Normal", s:nord4_gui, s:nord0_gui, "NONE", "NONE", "", "")
+call s:hi("Normal", s:nord4_gui, s:nord_gui_background, "NONE", "NONE", "", "")
 call s:hi("PMenu", s:nord4_gui, s:nord2_gui, "NONE", s:nord1_term, "NONE", "")
 call s:hi("PmenuSbar", s:nord4_gui, s:nord2_gui, "NONE", s:nord1_term, "", "")
 call s:hi("PMenuSel", s:nord8_gui, s:nord3_gui, s:nord8_term, s:nord3_term, "", "")
