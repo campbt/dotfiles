@@ -357,3 +357,6 @@ source ~/.zsh/fzf_tmux.zsh
 
 # Source the local configuration file, if one present
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+# Launch tmux automatically
+[ -f ~/.tmux.conf ] && if [ "$TMUX" = "" ]; then tmux; fi
