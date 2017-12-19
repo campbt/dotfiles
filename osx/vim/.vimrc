@@ -156,6 +156,10 @@
     " HistoryTraverse - Allows file-wise history traversal
     Plug 'ckarnell/history-traverse'
 
+    " Rooter - Auto change vim's cwd to the buffer
+    Plug 'airblade/vim-rooter'
+
+
     " --- Plugins to improve certain filetypes: -----------------
 
     " A collection of language packs for 100+, loaded on demand
@@ -308,9 +312,6 @@
 
     " Reload when entering buffer or gaining focus
     au FocusGained,BufEnter * :silent! !
-
-    " Change cwd to this file's directory, or to the git root
-    au BufRead * call SetProjectRoot()
 
     " ================
     " File Type Specific Settings
@@ -688,6 +689,10 @@
     let g:history_indicator_separator        = ' '
   "}}
 
+  " Rooter Settings {{
+    let g:rooter_silent_chdir = 1 " Don't echo when we change directories
+  " }}
+
   " sourcekitten Settings (swift autocomplete) {{
       autocmd Filetype swift imap <C-w> <C-x><C-o>
 
@@ -783,19 +788,4 @@
     endif
     echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
   endfunc
-
-  " set working directory to git project root
-  " or directory of current file if not git project
-  function! SetProjectRoot()
-    " default to the current file's directory
-    lcd %:p:h
-    let git_dir = system("git rev-parse --show-toplevel")
-    " See if the command output starts with 'fatal' (if it does, not in a git repo)
-    let is_not_git_dir = matchstr(git_dir, '^fatal:.*')
-    " if git project, change local directory to git project root
-    if empty(is_not_git_dir)
-      lcd `=git_dir`
-    endif
-  endfunction
-
 " }}
