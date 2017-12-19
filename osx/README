@@ -37,6 +37,13 @@ Tmux:
         brew install tmux
     + Link config
         ln ~/dotfiles/osx/tmux/.tmux.config ~/.tmux.config
+    + Install tmuxp: (session loader)
+        # May Need to install python to get pip
+        brew install python
+        pip3 install --user tmuxp
+        # May need to link this to something on the path
+        ln ~/Library/Python/3.6/bin/tmuxp ~/bin/tmuxp
+
 
 Vim:
     + Install Vim 8.x

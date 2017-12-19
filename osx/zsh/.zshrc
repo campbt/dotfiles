@@ -45,6 +45,16 @@ alias gla='git log --graph --full-history --all --color --date=short --pretty=fo
 alias glv="git log -p -40 | vim - -R -c 'set foldmethod=syntax'"
 alias gundo='git reset --soft HEAD^'
 
+# ADB Helpful commands
+alias adb_activities='adb shell dumpsys activity | grep -i run'
+alias adb_stack="adb shell dumpsys activity activities | sed -En -e '/Stack #/p' -e '/Running activities/,/Run #0/p'"
+alias adbr='adb kill-server; adb start-server'
+alias adb_wifi_on='adb shell svc wifi enable'
+alias adb_wifi_off='adb shell svc wifi disable'
+alias adb_communicator='adb logcat -s ChatCommunicator'
+alias pid="pidcat"
+alias pidm="adb logcat -v brief | pidcat"
+
 # ----------------------
 #   Configuration
 # ----------------------
@@ -122,6 +132,10 @@ bindkey -M menuselect '^[[Z' reverse-menu-complete #^[[Z is shift-tab
 # ----------------------
 #   Key Bindings
 # ----------------------
+
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd 'go' edit-command-line
 
 # ----------------------
 #   Prompt
@@ -232,6 +246,14 @@ function git_current_branch() {
   echo ${ref#refs/heads/}
 }
 
+#Quickly turn on/off hidden files
+function hiddenToggle() {
+  defaults write com.apple.finder AppleShowAllFiles "$1"
+  killall Finder
+}
+alias hiddenon='hiddenToggle TRUE'
+alias hiddenoff='hiddenToggle FALSE'
+
 # ----------------------
 #   Plugins
 # ----------------------
@@ -315,6 +337,7 @@ export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat 
 if [ -x "$(command -v ag)" ]; then
     # Use ag if we have it
     # export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD || ag -g f) 2> /dev/null'
+    export FZF_DEFAULT_OPTS=""
     export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --exact" # Makes fzf use exact match on non space separated patterns. Prefix with ' to enable fuzzy finding
     export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind ctrl-d:preview-page-down,ctrl-u:preview-page-up" # Custom bindings to scroll the preview window
     export FZF_CTRL_T_COMMAND='(git ls-tree -r --name-only HEAD || ag -g f) 2> /dev/null'
