@@ -221,7 +221,9 @@ function right_prompt() {
         echo "%F{black}($currentBranch)%f"
     fi
 }
-PROMPT=' $(prompt_vim_mode_indicator) $(prompt_pwd) $(prompt_git_indicator) '
+# The escape sequence at the beginning of the prompt is used to "pad" the bottom of the terminal to leave 3 spaces at the bottom of the terminal
+# The escape sequence \eD means move cursor down 1, \e[A is move up one. %{...%} should enclose escape sequences and $'' tells zsh to evaluate them
+PROMPT=$'%{\eD\e[A%} $(prompt_vim_mode_indicator) $(prompt_pwd) $(prompt_git_indicator) '
 RPROMPT=' $(right_prompt)'
 
 # This will trigger the prompt to refresh when we change VI modes
