@@ -2120,13 +2120,13 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>650 499 620 392 0 0 1920 1057 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>54 569 796 473 0 0 1920 1057 </string>
+	<string>31 355 937 512 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>235 44 1481 1013 0 0 1920 1057 </string>
+	<string>74 4 1327 873 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>57 321 865 707 0 0 1920 1057 </string>
+	<string>188 4 1208 873 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>2600 81 1131 894 1920 0 1920 1057 </string>
+	<string>0 4 1440 873 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
 	<string>240 87 1586 945 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
@@ -8972,7 +8972,7 @@
 			<key>Scrollback Lines</key>
 			<integer>10000</integer>
 			<key>Scrollback With Status Bar</key>
-			<false/>
+			<true/>
 			<key>Scrollback in Alternate Screen</key>
 			<true/>
 			<key>Selected Text Color</key>
