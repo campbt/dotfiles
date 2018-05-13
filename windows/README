@@ -1,0 +1,79 @@
+Setup for Windows configuration
+    (Hold your nose, we're going in)
+
+Installation:
+    + First, install bash in windows. Look up guides, use the Windows Store (if it works)
+        These are the steps I used, but they may be out of date:
+            + In PowerShell:
+                Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+                Restart
+                Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1604 -OutFile ~/Ubuntu.zip -UseBasicParsing
+                Expand-Archive ~/Ubuntu.zip ~/Ubuntu
+                ./Ubuntu/ubuntu.exe
+                bash
+	+ Disable Command Prompt Beeps:
+		sc config beep start= disabled
+
+Colors:
+    + Use the provided files in this repo to update the registry to set the colorscheme of Console
+
+Fonts:
+    + Droid Sans Mono Powerline
+        https://github.com/powerline/fonts/tree/master/DroidSansMonoSlashed
+
+ConEmu:
+    + ConEmu seems to be the best terminal for Windows
+        https://conemu.github.io/
+    + Use the settings file in windows/conemu
+
+Bash:
+    + Link config
+        ln ~/dotfiles/osx/bash/.bashrc ~/.bashrc
+    + Install helpful completion
+        sudo apt-get install bash-completion
+
+ZSH:
+    + Install zsh
+        sudo apt-get install zsh
+    + Make zsh the default shell
+        chsh -s /bin/zsh
+		(If this doesn't work, just set zsh in the .bashrc | This wasn't working for me)
+    + Link zsh config
+        ln ~/dotfiles/windows/zsh/.zshrc ~/.zshrc
+        ln -s ~/dotfiles/windows/zsh/.zsh ~/.zsh
+
+Tmux:
+    + Install tmux
+        sudo apt-get install tmux
+		NOTE: This may install too early of a version.
+              If there are issues starting it, use the script in windows/tmux
+					(need apt-get install build-essential)
+    + Link config
+        ln ~/dotfiles/windows/tmux/.tmux.config ~/.tmux.config
+    + Install tmuxp: (session loader)
+        # May Need to install python to get pip
+        sudo apt-get install python
+        pip3 install --user tmuxp
+        # May need to link this to something on the path
+        ln ~/Library/Python/3.6/bin/tmuxp ~/bin/tmuxp
+
+
+Vim:
+    + Install Vim 8.x
+		sudo add-apt-repository ppa:jonathonf/vim
+        sudo apt update
+		sudo apt install vim
+        sudo apt-get install vim-gtk
+    + Link config
+        ln -s ~/dotfiles/windows/vim/.vim ~/.vim
+        ln ~/dotfiles/windows/vim/.vimrc ~/.vimrc
+    + Run :PlugInstall
+        (First run will be buggy before this is done)
+
+Apt-get Packages:
+    + Run these brew packages if you still want them
+		sudo apt-get install build-essential
+        sudo apt-get install git
+        sudo apt-get install fzf
+        sudo apt-get install silversearcher-ag
+        sudo apt-get install tree

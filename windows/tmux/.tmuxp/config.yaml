@@ -1,0 +1,12 @@
+session_name: config
+windows:
+  - window_name: vim
+    # start_directory: ~
+    panes:
+      - shell_command:
+        - vim -p ~/.vimrc ~/.zshrc ~/.zshrc.local ~/.tmux.conf
+  - window_name: config
+    start_directory: ~/dotfiles
+    panes:
+      - shell_command:
+        - gs

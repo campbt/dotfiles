@@ -1,0 +1,44 @@
+Windows Registry Editor Version 5.00
+
+; Registry file that maps the Nord palette to the 16 avaliable colors
+
+;| NORD      | HEX     | cmd.exe     | ColorTable | DWORD    |
+;|-----------|---------|-------------|------------|----------|
+;| black     | #434b5d | Black       | 00 | 005d4b43
+;| brblack   | #556076 | Gray        | 08 | 00766055
+;| red       | #C7656e | Red         | 02 | 006e65c7
+;| brred     | #C7656e | LightRed    | 06 | 006e65c7
+;| green     | #acc894 | Green       | 01 | 0094c8ac
+;| brgreen   | #acc893 | LightGreen  | 03 | 0093c8ac
+;| yellow    | #f2d18f | Yellow      | 07 | 008fd1f2
+;| bryellow  | #f5d391 | LightYellow | 15 | 0091d3f5
+;| blue      | #86a7c8 | Blue        | 14 | 00c8a786
+;| brblue    | #87a8ca | LightBlue   | 04 | 00caa887
+;| magenta   | #bd95b6 | Purple      | 12 | 00b695bd
+;| brmagenta | #bd95b5 | LightPurple | 13 | 00b595bd
+;| cyan      | #8ec9da | Aqua        | 05 | 00dac98e
+;| brcyan    | #95c4c3 | LightAqua   | 09 | 00c3c495
+;| white     | #eaeef4 | White       | 11 | 00f4eeea
+;| brwhite   | #f2f5fb | BrightWhite | 10 | 00fbf5f2
+
+
+
+[HKEY_CURRENT_USER\Console]
+"ColorTable00"=dword:005d4b43
+"ColorTable08"=dword:00766055
+"ColorTable02"=dword:006e65c7
+"ColorTable06"=dword:006e65c7
+"ColorTable01"=dword:0094c8ac
+"ColorTable03"=dword:0093c8ac
+"ColorTable07"=dword:008fd1f2
+"ColorTable15"=dword:0091d3f5
+"ColorTable14"=dword:00c8a786
+"ColorTable04"=dword:00caa887
+"ColorTable12"=dword:00b695bd
+"ColorTable13"=dword:00b595bd
+"ColorTable05"=dword:00dac98e
+"ColorTable09"=dword:00c3c495
+"ColorTable11"=dword:00f4eeea
+"ColorTable10"=dword:00fbf5f2
+"ScreenColors"=dword:00000001
+"PopupColors"=dword:000000f6
