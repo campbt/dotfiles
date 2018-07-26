@@ -45,7 +45,8 @@
   " :OpenSession : Displays list (or you can tab complete) of sessions
   " F2           : Toggle Paste mode on/off
   " \gh          : Toggle highlight lines changed since last commit
-  " c] c[        : Move to next chunk of changes since last commit
+  " [c ]c        : Move to next chunk of changes since last commit
+  " [q ]q ]Q [Q  : Move to next block in quick fix window
   " gp           : Visually Select recently pasted text
   " \K           : Grep the word the cursor is on
   " :Ag <>       : Silver search and throw results into quickfix
@@ -69,7 +70,7 @@
     " Plug 'arcticicestudio/nord-vim'
 
     "NerdTree - Directory Viewer
-    Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+    Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 
     "" vim-airline - cool status line
     Plug 'vim-airline/vim-airline'
@@ -105,6 +106,12 @@
 
     "" Yankring - Great yanking \p to open yankring
     "Plug 'vim-scripts/YankRing.vim'
+
+    " vim-dispatch | Asynchronous makes
+    Plug 'tpope/vim-dispatch', { 'on':  'Make' }
+
+    " Adds nice signs for the quickfix window (good for errors)
+    Plug 'dhruvasagar/vim-markify'
 
     " Misc install needed for some (vim-session and vim-easytags)
     Plug 'xolox/vim-misc'
@@ -444,6 +451,12 @@
     map [l :ll<CR>:lprev<CR>
     map ]l :ll<CR>:lnext<CR>
 
+    " Quickfix list navigation
+    nnoremap [q :cprevious<CR>
+    nnoremap ]q :cnext<CR>
+    nnoremap [Q :cfirst<CR>
+    nnoremap ]Q :clast<CR>
+
     " Better grepping
     command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 
@@ -647,6 +660,15 @@
   " vim-sessions Settings {{
     let g:session_autoload = 'no'
     let g:session_autosave = 'yes'
+  " }}
+
+  " vim-markify Settings {{
+    let g:markify_error_text = '▸▸'
+    let g:markify_warning_text = '▸▸'
+    let g:markify_info_text = '▸'
+    let g:markify_error_texthl = 'Error'
+    let g:markify_warning_texthl = 'Todo'
+    let g:markify_info_texthl = 'Normal'
   " }}
 
   " vim-signify Settings {{
