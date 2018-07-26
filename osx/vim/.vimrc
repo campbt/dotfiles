@@ -76,7 +76,7 @@
     " Plug 'vim-airline/vim-airline-themes'
 
     "" UltiSnippits - Best snippit plugin I've seen
-    if(has("py3") || has("python"))
+    if(has("py3") || has("python") || has("python3"))
         Plug 'SirVer/ultisnips'
     endif
 
@@ -690,6 +690,16 @@
       "autocmd Filetype swift runtime! autoload/eclim/<amatch>/complete.vim
           "\ | let s:cfunc = 'eclim#'.expand('<amatch>').'#complete#CodeComplete'
           "\ | if exists('*'.s:cfunc) | let &l:omnifunc=s:cfunc | endif
+  " }}
+
+  " vim-rest-client settings {{
+
+        " Shows the curl commdn
+        let g:vrc_show_command = 1
+
+        " Bind it to <Leader>r when in rest files
+        let g:vrc_set_default_mapping = 0
+        autocmd FileType rest map <Leader>r :call VrcQuery()<BR>
   " }}
 
 " -------

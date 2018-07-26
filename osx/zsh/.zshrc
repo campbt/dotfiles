@@ -18,7 +18,7 @@
 export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/sbin:/usr/local/git/bin:/usr/local/mysql/bin:$PATH
 export PATH=~/bin:$PATH
-export PATH=$PATH:~/homebrew/bin
+export PATH=~/homebrew/bin:$PATH
 export PATH=$PATH:~/mongodb/bin
 export PATH=$PATH:~/Library/Android/sdk/platform-tools
 export EDITOR=vim
@@ -53,7 +53,7 @@ alias adb_wifi_on='adb shell svc wifi enable'
 alias adb_wifi_off='adb shell svc wifi disable'
 alias adb_communicator='adb logcat -s ChatCommunicator'
 alias pid="pidcat"
-alias pidm="adb logcat -v brief | pidcat"
+alias pidm="adb shell setprop log.tag.GAv4 ERROR & adb logcat -v brief | pidcat"
 
 # ----------------------
 #   Configuration
