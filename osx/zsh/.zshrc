@@ -6,7 +6,7 @@
 # C-w/b         | Forward/backward by word. Good for auto complete
 # C-f           | Accept the full auto completion
 # Aliases: g<?> | Variety of git commands
-#
+# C-r         | View command history
 #
 #
 #
@@ -342,6 +342,7 @@ if [ -x "$(command -v ag)" ]; then
     export FZF_DEFAULT_OPTS=""
     export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --exact" # Makes fzf use exact match on non space separated patterns. Prefix with ' to enable fuzzy finding
     export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind ctrl-d:preview-page-down,ctrl-u:preview-page-up" # Custom bindings to scroll the preview window
+    export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --history=$HOME/.fzf_history"
     export FZF_CTRL_T_COMMAND='(git ls-tree -r --name-only HEAD || ag -g f) 2> /dev/null'
 fi
 
