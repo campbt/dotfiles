@@ -313,6 +313,28 @@
 
     " git commit messages
     au FileType gitcommit setlocal spell textwidth=80 | call setpos('.', [0, 1, 1, 0]) " Start at line 0
+
+    " Change cursor based on mode when in iTerm:
+    " Specify the cursor to be a pipe in insert mode, a block in normal mode, and
+    " an underbar in replace mode.
+    if $TERM_PROGRAM == "iTerm.app" && !has('nvim')
+       " https://hamberg.no/erlend/posts/2014-03-09-change-vim-cursor-in-iterm.html#comment-2719264965
+       if exists('$TMUX')
+           " Vertical bar in insert mode
+           let &t_SI = "\<esc>Ptmux;\<esc>\<esc>]50;CursorShape=1\x7\<esc>\\"
+           " Block in normal mode
+           let &t_EI = "\<esc>Ptmux;\<esc>\<esc>]50;CursorShape=0\x7\<esc>\\"
+           " Underline in replace mode
+           let &t_SR = "\<esc>Ptmux;\<esc>\<esc>]50;CursorShape=2\x7\<esc>\\"
+       else
+           " Vertical bar in insert mode
+           let &t_SI = "\<esc>]50;CursorShape=1\x7"
+           " Block in normal mode
+           let &t_EI = "\<esc>]50;CursorShape=0\x7"
+           " Underline in replace mode
+           let &t_SR = "\<esc>]50;CursorShape=2\x7"
+       endif
+    endif
 " }}
 
 " ----------
@@ -721,7 +743,7 @@
 
         " Bind it to <Leader>r when in rest files
         let g:vrc_set_default_mapping = 0
-        autocmd FileType rest map <Leader>r :call VrcQuery()<BR>
+        autocmd FileType rest map <Leader>r :call VrcQuery()<CR>
   " }}
 
 " -------
