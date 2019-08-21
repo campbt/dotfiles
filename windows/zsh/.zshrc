@@ -236,14 +236,6 @@ function git_current_branch() {
   echo ${ref#refs/heads/}
 }
 
-#Quickly turn on/off hidden files
-function hiddenToggle() {
-  defaults write com.apple.finder AppleShowAllFiles "$1"
-  killall Finder
-}
-alias hiddenon='hiddenToggle TRUE'
-alias hiddenoff='hiddenToggle FALSE'
-
 # ----------------------
 #   Plugins
 # ----------------------
@@ -330,6 +322,8 @@ if [ -x "$(command -v ag)" ]; then
     export FZF_DEFAULT_OPTS=""
     export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --exact" # Makes fzf use exact match on non space separated patterns. Prefix with ' to enable fuzzy finding
     export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind ctrl-d:preview-page-down,ctrl-u:preview-page-up" # Custom bindings to scroll the preview window
+    export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind ctrl-n:down,ctrl-p:up" # Custom bindings to bind c-n and c-p
+    export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --history=$HOME/.fzf_history"
     export FZF_CTRL_T_COMMAND='(git ls-tree -r --name-only HEAD || ag -g f) 2> /dev/null'
 fi
 

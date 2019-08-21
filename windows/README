@@ -67,6 +67,13 @@ Vim:
     + Link config
         ln -s ~/dotfiles/windows/vim/.vim ~/.vim
         ln ~/dotfiles/windows/vim/.vimrc ~/.vimrc
+    + Make backup dirs
+        mkdir ~/.vim/tmp
+        mkdir ~/.vim/tmp/swap
+        mkdir ~/.vim/tmp/undo
+        mkdir ~/.vim/tmp/backup
+    + Install cmake (for YouCompleteMe)
+        brew install cmake
     + Run :PlugInstall
         (First run will be buggy before this is done)
 
