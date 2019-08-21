@@ -37,12 +37,18 @@ ZSH: (Worse than FISH except for *much* better vim support)
     + Link zsh config
         ln ~/dotfiles/osx/zsh/.zshrc ~/.zshrc
         ln -s ~/dotfiles/osx/zsh/.zsh ~/.zsh
+    + Clone in some packages
+        git clone git://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+        git clone git://github.com/zsh-users/zsh-syntax-highlighting
+        git clone https://github.com/zsh-users/zsh-history-substring-search
+    + "gls" (which ls is alias'd to) is found in:
+        brew install coreutils
 
 Tmux:
     + Install tmux
         brew install tmux
     + Link config
-        ln ~/dotfiles/osx/tmux/.tmux.config ~/.tmux.config
+        ln ~/dotfiles/osx/tmux/.tmux.conf ~/.tmux.conf
     + Install tmuxp: (session loader)
         # May Need to install python to get pip
         brew install python
@@ -62,8 +68,12 @@ Vim:
         mkdir ~/.vim/tmp/swap
         mkdir ~/.vim/tmp/undo
         mkdir ~/.vim/tmp/backup
+    + Install cmake (for YouCompleteMe)
+        brew install cmake
     + Run :PlugInstall
         (First run will be buggy before this is done)
+    + If there are issues with crashes (Seg faults) or messages of YcmServer crashing,
+      manually install YouCompleteMe: ~/.vim/plugged/YouCompleteMe/install.py
 
 Brew Packages:
     + Run these brew packages if you still want them

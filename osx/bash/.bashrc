@@ -52,8 +52,10 @@ alias glv="git log -p -40 | vim - -R -c 'set foldmethod=syntax'"
 alias gundo='git reset --soft HEAD^'
 
 # Use brew install git bash-completion
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
+if [ -x "$(command -v brew)" ]; then
+    if [ -f $(brew --prefix)/etc/bash_completion ]; then
+        . $(brew --prefix)/etc/bash_completion
+    fi
 fi
 
 #Alisa to v script, type v --help for more info
@@ -103,7 +105,7 @@ alias mongo="~/bin/mongod --dbpath ~/mongodb/data"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Bashmarks
-source ~/.local/bin/bashmarks.sh
+[ -f ~/.local/bin/bashmarks.sh ] && source ~/.local/bin/bashmarks.sh
 
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
 #   - Bypass fuzzy finder if there's only one match (--select-1)
