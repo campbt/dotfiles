@@ -85,6 +85,7 @@ setopt hist_ignore_all_dups # Ignore duplicates in the history
 setopt hist_save_no_dups # Save no dupes to history
 setopt prompt_subst # allow expansion in prompts
 
+unsetopt BEEP # Oh sweet silence
 
 # ----------------------
 #   Vi-Mode

@@ -278,6 +278,9 @@
     " Make the command-line completion better
     set wildmenu
 
+    " Disable beeps
+    set noerrorbells visualbell t_vb=
+
     "Highlight cursor line (of current buffer only)
     " NOTE: Potentially HUGE performance hit for this for some filetypes. Disabled for now
     " autocmd BufEnter * setlocal cursorline
