@@ -54,7 +54,7 @@
   " :Subvert/..  : Replace multiple variants (like one/One/ONE). Ex: :Subvert/first/second/g  :Subvert/child{,ren}/adult{,s}
   " :Remove      : Delete file and buffer
   " :Move        : Move file and buffer
-  " <C-S-P>      : Displays the highlight tags for the word
+  " <C-S-F>      : Displays the highlight tags for the word
   " gh gl        : Navigate backward (gh) or forward (gl) by file
 " }}
 
@@ -105,7 +105,7 @@
     " }}
 
     "" Yankring - Great yanking \p to open yankring
-    "Plug 'vim-scripts/YankRing.vim'
+    Plug 'vim-scripts/YankRing.vim'
 
     " vim-dispatch | Asynchronous makes
     Plug 'tpope/vim-dispatch', { 'on':  'Make' }
@@ -168,7 +168,6 @@
 
     " Rooter - Auto change vim's cwd to the buffer
     Plug 'airblade/vim-rooter'
-
 
     " --- Plugins to improve certain filetypes: -----------------
 
@@ -292,9 +291,6 @@
 
     " Trim whitespace on save (has problems moving cursor around)
     autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
-
-    " Return cursor to previous location on load
-    autocmd BufReadPost * normal `"
 
     " Remember last location in file
     if has("autocmd")
@@ -716,6 +712,10 @@
     " let g:history_indicator_forward_active   = '➡' " Default: '➡'
     " let g:history_indicator_forward_inactive = '' " Default: '⇨'
     let g:history_indicator_separator        = ' '
+
+    " Set filetypes to pass over putting in the history. Defaults to ['netrw']
+    " qf = QuickFix window as there seem to be some issues with it and vim-dispatch
+    let g:history_ft_ignore = ['qf', 'netrw']
   "}}
 
   " Rooter Settings {{
@@ -723,7 +723,7 @@
   " }}
 
   " sourcekitten Settings (swift autocomplete) {{
-      autocmd Filetype swift imap <C-w> <C-x><C-o>
+      " autocmd Filetype swift imap <C-w> <C-x><C-o>
 
       " Hooks in swift to ycm
       "let g:ycm_semantic_triggers =  {
@@ -820,7 +820,7 @@
   endfun
 
   " Identify current word's syntax name
-  nmap <C-S-P> :call <SID>SynStack()<CR>
+  map <C-S-F> :call <SID>SynStack()<CR>
   function! <SID>SynStack()
     if !exists("*synstack")
       return

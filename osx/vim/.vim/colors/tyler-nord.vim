@@ -36,19 +36,19 @@ let s:nord15_gui = "#B48EAD"
 
 let s:nord_gui_background = "#1d2128"
 
-let s:nord1_term = "0"
-let s:nord3_term = "8"
-let s:nord5_term = "7"
-let s:nord6_term = "15"
-let s:nord7_term = "14"
-let s:nord8_term = "6"
-let s:nord9_term = "4"
-let s:nord10_term = "12"
-let s:nord11_term = "1"
-let s:nord12_term = "11"
-let s:nord13_term = "3"
-let s:nord14_term = "2"
-let s:nord15_term = "5"
+let s:nord1_term = "0" " Black
+let s:nord3_term = "8" " Gray
+let s:nord5_term = "7" " White
+let s:nord6_term = "15" " White2 (Background)
+let s:nord7_term = "14" " Cyan2
+let s:nord8_term = "6"  " Cyan1
+let s:nord9_term = "4"  " Blue1
+let s:nord10_term = "12" " Blue2
+let s:nord11_term = "1"  " Red1
+let s:nord12_term = "11" " Red2
+let s:nord13_term = "3"  " Yellow1
+let s:nord14_term = "2"  " Green1
+let s:nord15_term = "5"  " Magenta
 
 let s:nord3_gui_brightened = [
   \ s:nord3_gui,
@@ -199,6 +199,7 @@ call s:hi("WildMenu", s:nord8_gui, s:nord3_gui, s:nord8_term, s:nord3_term, "", 
 "+--- Search ---+
 call s:hi("IncSearch", s:nord1_gui, s:nord8_gui, s:nord1_term, s:nord8_term, "underline", "")
 call s:hi("Search", s:nord1_gui, s:nord8_gui, s:nord1_term, s:nord8_term, "NONE", "")
+call s:hi("QuickFixLine", "", "", "", "", "bold,underline", "")
 
 "+--- Tabs ---+
 call s:hi("TabLine", s:nord4_gui, s:nord1_gui, "NONE", s:nord1_term, "NONE", "")
@@ -516,3 +517,9 @@ hi! link mkdLinkDef mkdLink
 hi! link mkdLinkDefTarget mkdURL
 hi! link mkdLinkTitle mkdInlineURL
 hi! link mkdDelimiter Keyword
+
+" Swift
+call s:hi("swiftType", s:nord7_gui, "", s:nord7_term, "", "none", "")
+call s:hi("swiftTypeWrapper", s:nord7_gui, "", s:nord7_term, "", "none", "")
+call s:hi("swiftAttributes", s:nord15_gui, "", s:nord15_term, "", "none", "")
+call s:hi("swiftProperty", s:nord8_gui, "", s:nord8_term, "", "none", "")
