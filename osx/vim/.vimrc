@@ -47,6 +47,7 @@
   " \gh          : Toggle highlight lines changed since last commit
   " [c ]c        : Move to next chunk of changes since last commit
   " [q ]q ]Q [Q  : Move to next block in quick fix window
+  " \q           : Toggle Quickfix
   " gp           : Visually Select recently pasted text
   " \K           : Grep the word the cursor is on
   " :Ag <>       : Silver search and throw results into quickfix
@@ -832,4 +833,18 @@
   function! FormatJSON()
       :%!python -m json.tool
   endfunction
+
+  function! QuickFix_toggle()
+      for i in range(1, winnr('$'))
+          let bnum = winbufnr(i)
+          if getbufvar(bnum, '&buftype') == 'quickfix'
+              cclose
+              return
+          endif
+      endfor
+
+      copen
+  endfunction
+
+  nnoremap <silent> <Leader>q :call QuickFix_toggle()<cr>
 " }}
